@@ -1,0 +1,146 @@
+{
+    "0": {
+        "freq": 103.4,
+        "bandwidth": 5.0,
+        "power": 4.0,
+        "signal_type": "voice",
+        "mod": "ЧМ",
+        "bearing": 105,
+        "text": "В Петропавловск-Камчатском сейчас полночь!"
+    },
+    "1": {
+        "freq": 92.0,
+        "bandwidth": 5.0,
+        "power": 4.5,
+        "signal_type": "voice",
+        "mod": "ЧМ",
+        "bearing": 93,
+        "text": "Я русский! Я иду до конца..."
+    },
+    "2": {
+        "freq": 540.0,
+        "bandwidth": 6.0,
+        "power": 3.0,
+        "signal_type": "voice",
+        "mod": "freq",
+        "bearing": 120,
+        "text": "Ель, прием, я Ольха: сто двенадцать-двести двадцать четыре"
+    },
+    "3": {
+        "freq": 60.0,
+        "bandwidth": 3.0,
+        "power": 3.5,
+        "signal_type": "voice",
+        "mod": "АМ",
+        "bearing": 90,
+        "text": "Ольха, прием, я Ель: сто пятьдесят один-сто тридцать два"
+    },
+    "4": {
+        "freq": 1200.0,
+        "bandwidth": 8.0,
+        "power": 4.0,
+        "signal_type": "voice",
+        "mod": "ЧМ",
+        "bearing": 225,
+        "text": "Олег, прием, я Молот: начинаю движение"
+    },
+    "5": {
+        "freq": 450.0,
+        "bandwidth": 4.5,
+        "power": 3.0,
+        "signal_type": "voice",
+        "mod": "freq",
+        "bearing": 40,
+        "text": "Roger roger, start operation immediately !"
+    },
+    "6": {
+        "freq": 450.0,
+        "bandwidth": 4.0,
+        "power": 3.0,
+        "signal_type": "voice",
+        "mod": "ЧМ",
+        "bearing": 35,
+        "text": "Enemy spotted, prepare fire postions!"
+    },
+    "7": {
+        "freq": 422.7,
+        "bandwidth": 7.0,
+        "power": 2.5,
+        "signal_type": "digital",
+        "mod": "qphase",
+        "bearing": 24,
+        "text": "1111000010101010 11110100101010 1111000010001010"
+    },
+    "8": {
+        "freq": 1773.2,
+        "bandwidth": 13.2,
+        "power": 3.5,
+        "signal_type": "voice",
+        "mod": "АМ",
+        "bearing": 330,
+        "text": "Ало! Ало! Меня слышно?"
+    },
+    "9": {
+        "freq": 400.0,
+        "bandwidth": 5.0,
+        "power": 3.8,
+        "signal_type": "voice",
+        "mod": "qphase",
+        "bearing": 20,
+        "text": "Bravo status six, papaya rules!"
+    },
+    "10": {
+        "freq": 442.0,
+        "bandwidth": 5.0,
+        "power": 1.5,
+        "signal_type": "points",
+        "mod": "АМ",
+        "bearing": 30,
+        "text": "11001101 11101010 11111111 00000000"
+    },
+    "11": {
+        "freq": 916.0,
+        "bandwidth": 1.0,
+        "power": 3.1,
+        "signal_type": "points",
+        "mod": "АМ",
+        "bearing": 34,
+        "text": "110010101000111101000011010100101"
+    },
+    "12": {
+        "freq": 1197.5,
+        "bandwidth": 2.5,
+        "power": 3.1,
+        "signal_type": "tele",
+        "mod": "АМ",
+        "bearing": 34,
+        "text": "11110100110110101010101011111010010001101"
+    },
+    "13": {
+        "freq": 230.3,
+        "bandwidth": 3.5,
+        "power": 5.0,
+        "signal_type": "points",
+        "mod": "ППРЧ",
+        "bearing": 45,
+        "text": "110101101011"
+    },
+    "14": {
+        "freq": 2456.2,
+        "bandwidth": 6.2,
+        "power": 4.0,
+        "signal_type": "tele",
+        "mod": "ЧМ",
+        "bearing": 330,
+        "text": "11101010110011010111010101010011101"
+    },
+    "15": {
+        "freq": 2424.2,
+        "bandwidth": 6.2,
+        "power": 2.5,
+        "signal_type": "points",
+        "mod": "ППРЧ",
+        "bearing": 300,
+        "text": "100101000010101110011001001010010010"
+    }
+}
