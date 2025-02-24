@@ -1,47 +1,24 @@
 from PyQt5.QtWidgets import QDialog
-from PyQt5.uic import loadUi
 from PyQt5.QtCore import pyqtSignal
-
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel
-
-from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtWidgets import*
-from PyQt5 import QtCore
-
-import random
-import sys
-from functools import partial
-
-import numpy as np
-from scipy.fft import fft, fftfreq
-import matplotlib.pyplot as plt
-from PyQt5.QtCore import Qt, QTimer, QSize, QPoint
-from PyQt5.QtWidgets import (QApplication, QMainWindow, QVBoxLayout, QWidget, QPushButton, QTabWidget, QComboBox,
-                             QSlider, QLabel, QDoubleSpinBox, QProgressBar, QLineEdit, QTextEdit,
-                             QHBoxLayout, QSizePolicy, QRadioButton, QButtonGroup, QFileDialog)
-from PyQt5.QtGui import QPainter, QPen, QFont, QPixmap, QImage
-from matplotlib.animation import FuncAnimation
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-
-import ui_rabota
-import ui_administrator
-import ui_peleng
-
-
-import sys
-import numpy as np
-import json
-import math
-import matplotlib.pyplot as plt
-import matplotlib.animation as animation
-from matplotlib.colors import LinearSegmentedColormap
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QPushButton, QLabel, QLineEdit
+from PyQt5.uic import loadUi
 
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
+
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.colors import LinearSegmentedColormap
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+
+import numpy as np
+import json
+import math
+
+import ui_rabota
+import ui_administrator
+import ui_peleng
 
 time = np.linspace(0, 0.2, 256) # время (y на панораме)
 filtered_freqs = np.linspace(0, 20, 512) # частоты (x на панораме)
@@ -186,11 +163,13 @@ signals = {int(idx): SignalData(**info) for idx, info in data.items()}
 filter_signal()
 
 
-
 class MainScreen(QDialog):
 
+    signal_goto_theory   = pyqtSignal()
+    signal_goto_test     = pyqtSignal()
+
     signal_poisk = pyqtSignal()
-    selected_id = 1
+    selected_id  = 1
 
     def __init__(self):
         super(MainScreen, self).__init__()
@@ -201,12 +180,20 @@ class MainScreen(QDialog):
         self.administrator_window  = ui_administrator.AdministratorScreen()
         self.peleng_window         = ui_peleng.PelengScreen()
 
+        self.btn_theory.clicked.connect(self.goto_theory)
+
         self.btn_rabota.clicked.connect(self.show_rabota)
         self.btn_administrator.clicked.connect(self.show_administrator)
         self.btn_peleng.clicked.connect(self.show_peleng)
         self.btn_poisk.clicked.connect(self.poisk)
         self.btn_poisk2.clicked.connect(self.poisk2)
 
+    def goto_theory(self):
+        self.signal_goto_theory.emit()
+
+    def goto_test(self):
+        self.signal_goto_test.emit()
+    
     def poisk(self):
         self.search()
         self.signal_poisk.emit()
@@ -226,7 +213,7 @@ class MainScreen(QDialog):
         self.peleng_window.show()  
 
     def init_ui(self):
-        loadUi('qt\main_1.ui', self)
+        loadUi('qt\main.ui', self)
         self.setWindowTitle("RF Spectrum Analyzer")
         self.setGeometry(100, 100, 1000, 600)
 
@@ -235,20 +222,52 @@ class MainScreen(QDialog):
 
         self.graph()
 
-        style_btn = "QPushButton {color: rgb(0, 0, 0); background-color : rgb(200, 200, 200)} QPushButton::hover {background-color: rgb(230, 230, 230)}"
-        self.btn_z.setStyleSheet(style_btn)
-        self.btn_poisk.setStyleSheet(style_btn)
-        self.btn_poisk2.setStyleSheet(style_btn)
-        self.btn_peleng.setStyleSheet(style_btn)
-        self.btn_pauza.setStyleSheet(style_btn)
-        self.btn_send.setStyleSheet(style_btn)
-        self.btn_test.setStyleSheet(style_btn)
-        self.btn_peleng.setStyleSheet(style_btn)
-        self.btn_peleng_2.setStyleSheet(style_btn)
+        style_btn = "QPushButton {color: rgb(0, 0, 0); background-color : rgb(200, 200, 200)} QPushButton::hover {background-color: rgb(255, 255, 255)}"
+
+        # Top
         self.btn_rabota.setStyleSheet(style_btn)
         self.btn_administrator.setStyleSheet(style_btn)
         self.btn_peleng.setStyleSheet(style_btn)
 
+        # Подавление
+        self.btn_z.setStyleSheet(style_btn)
+        self.btn_pusk.setStyleSheet(style_btn)
+        self.btn_prr.setStyleSheet(style_btn)
+        self.btn_adaptiv.setStyleSheet(style_btn)
+        self.btn_control.setStyleSheet(style_btn)
+        self.btn_doraz.setStyleSheet(style_btn)
+
+        # Настройки
+        self.btn_c_1.setStyleSheet(style_btn)
+        self.btn_c_2.setStyleSheet(style_btn)
+
+        # Кнопки
+        self.btn_poisk.setStyleSheet(style_btn)
+        self.btn_poisk2.setStyleSheet(style_btn)
+
+        self.btn_peleng_2.setStyleSheet(style_btn)
+        self.btn_pauza.setStyleSheet(style_btn)
+
+        self.btn_test.setStyleSheet(style_btn)
+        self.btn_tehanaliz.setStyleSheet(style_btn)
+
+        self.btn_send.setStyleSheet(style_btn)
+        self.btn_ask_coord.setStyleSheet(style_btn)
+
+        self.btn_empty_10.setStyleSheet(style_btn)
+        self.btn_empty_11.setStyleSheet(style_btn)
+        self.btn_empty_12.setStyleSheet(style_btn)
+        self.btn_empty_13.setStyleSheet(style_btn)
+
+        # Под графиком
+        self.btn_empty_2.setStyleSheet(style_btn)
+        self.btn_empty_3.setStyleSheet(style_btn)
+        self.btn_empty_4.setStyleSheet(style_btn)
+        self.btn_empty_5.setStyleSheet(style_btn)
+        self.btn_empty_6.setStyleSheet(style_btn)
+        self.btn_empty_7.setStyleSheet(style_btn)
+        self.btn_empty_8.setStyleSheet(style_btn)
+        self.btn_empty_9.setStyleSheet(style_btn)
 
     def update(self, frame):
         base[:, :] = np.roll(base, shift=-2, axis=0)
@@ -266,7 +285,6 @@ class MainScreen(QDialog):
             self.selected_line.set_xdata([])
             self.selected_line.set_ydata([])
         return self.cax, self.selected_line
-
 
     def graph(self):
         self.control_layer = self.Twidget
@@ -349,7 +367,6 @@ class MainScreen(QDialog):
     def search(self):
         global threshold, max_power, search_low, search_hight, last_freq
         global low_freq, high_freq
-        #|||||||||||||||||||||||||ОТ ТНТЕРФЕЙСА||||||||||||||||||||||||||||||||:
 
         new_search_low   = int(self.lbl_search_low.text())
         new_search_hight = int(self.lbl_search_hight.text())
@@ -358,7 +375,6 @@ class MainScreen(QDialog):
         mod =  self.cb_mod.currentText()
 
         self.lbl_output.setText("")
-        #|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
         
         # ЕСЛИ даные для поиска меняли, обновляем из
         if (not math.isclose(new_threshold,threshold)) | (not math.isclose(new_search_low, search_low)) | (not math.isclose(new_search_hight, search_hight)):

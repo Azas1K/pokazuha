@@ -1,17 +1,6 @@
 from PyQt5.QtWidgets import QDialog
 from PyQt5.uic import loadUi
 
-import numpy as np
-from scipy.fft import fft, fftfreq
-import matplotlib.pyplot as plt
-from PyQt5.QtCore import Qt, QTimer, QSize, QPoint
-from PyQt5.QtWidgets import (QApplication, QMainWindow, QVBoxLayout, QWidget, QPushButton, QTabWidget, QComboBox,
-                             QSlider, QLabel, QDoubleSpinBox, QProgressBar, QLineEdit, QTextEdit,
-                             QHBoxLayout, QSizePolicy, QRadioButton, QButtonGroup, QFileDialog)
-from PyQt5.QtGui import QPainter, QPen, QFont, QPixmap, QImage
-from matplotlib.animation import FuncAnimation
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-
 class RabotaScreen(QDialog):
 
     def __init__(self):
