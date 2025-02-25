@@ -22,6 +22,7 @@ class QT_Controler(QObject):
 
     def signals(self):
         self.main.signal_goto_theory.connect(self.gotoTheoryScreen)
+        self.theory.signal_goto_main.connect(self.gotoMainScreen)
 
     def run(self):
         self.widget.addWidget(self.main)
@@ -31,6 +32,6 @@ class QT_Controler(QObject):
         self.widget.addWidget(self.theory)
         self.widget.setCurrentIndex(self.widget.currentIndex()+1)
         
-    # def gotoTestScreen(self):
-    #     self.widget.addWidget(self.theory)
-    #     self.widget.setCurrentIndex(self.widget.currentIndex()+1)
+    def gotoMainScreen(self):
+        self.widget.addWidget(self.main)
+        self.widget.setCurrentIndex(self.widget.currentIndex()+1)

@@ -228,6 +228,8 @@ class MainScreen(QDialog):
         self.btn_rabota.setStyleSheet(style_btn)
         self.btn_administrator.setStyleSheet(style_btn)
         self.btn_peleng.setStyleSheet(style_btn)
+        self.btn_theory.setStyleSheet(style_btn)
+        self.btn_analiz.setStyleSheet(style_btn)
 
         # Подавление
         self.btn_z.setStyleSheet(style_btn)
