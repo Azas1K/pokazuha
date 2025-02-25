@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1888</width>
-    <height>981</height>
+    <height>980</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -133,10 +133,10 @@
   <widget class="QFrame" name="frame_4">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>230</y>
+     <x>860</x>
+     <y>50</y>
      <width>811</width>
-     <height>721</height>
+     <height>900</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -149,9 +149,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>10</y>
+      <y>5</y>
       <width>791</width>
-      <height>230</height>
+      <height>290</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -162,9 +162,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>245</y>
+      <y>305</y>
       <width>791</width>
-      <height>230</height>
+      <height>290</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -175,9 +175,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>480</y>
+      <y>605</y>
       <width>791</width>
-      <height>230</height>
+      <height>290</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -200,7 +200,7 @@
    <property name="frameShadow">
     <enum>QFrame::Plain</enum>
    </property>
-   <widget class="QSlider" name="horizontalSlider">
+   <widget class="QSlider" name="qs_carrier_freq">
     <property name="geometry">
      <rect>
       <x>250</x>
@@ -211,6 +211,12 @@
     </property>
     <property name="cursor">
      <cursorShape>SplitHCursor</cursorShape>
+    </property>
+    <property name="minimum">
+     <number>100</number>
+    </property>
+    <property name="maximum">
+     <number>1000</number>
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
@@ -225,7 +231,7 @@
      <enum>QSlider::TicksBelow</enum>
     </property>
    </widget>
-   <widget class="QSlider" name="horizontalSlider_2">
+   <widget class="QSlider" name="qs_mod_freq">
     <property name="geometry">
      <rect>
       <x>250</x>
@@ -244,7 +250,7 @@
      <enum>QSlider::TicksBelow</enum>
     </property>
    </widget>
-   <widget class="QSlider" name="horizontalSlider_3">
+   <widget class="QSlider" name="qs_hormonics">
     <property name="geometry">
      <rect>
       <x>250</x>
@@ -256,6 +262,15 @@
     <property name="cursor">
      <cursorShape>SplitHCursor</cursorShape>
     </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>5</number>
+    </property>
+    <property name="pageStep">
+     <number>1</number>
+    </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
     </property>
@@ -263,7 +278,7 @@
      <enum>QSlider::TicksBelow</enum>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox">
+   <widget class="QComboBox" name="cb_mod">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -275,6 +290,31 @@
     <property name="styleSheet">
      <string notr="true">background-color: rgb(212, 111, 68)</string>
     </property>
+    <item>
+     <property name="text">
+      <string>АМ</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>ОМ</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>ЧМ</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>ЧМн</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>ФМн</string>
+     </property>
+    </item>
    </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
@@ -340,10 +380,10 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
   <widget class="QFrame" name="frame_7">
    <property name="geometry">
     <rect>
-     <x>870</x>
-     <y>50</y>
-     <width>791</width>
-     <height>901</height>
+     <x>20</x>
+     <y>240</y>
+     <width>811</width>
+     <height>711</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -357,21 +397,8 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>771</width>
-      <height>420</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(210, 210, 210)</string>
-    </property>
-   </widget>
-   <widget class="QWidget" name="widget_5" native="true">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>470</y>
-      <width>771</width>
-      <height>420</height>
+      <width>791</width>
+      <height>691</height>
      </rect>
     </property>
     <property name="styleSheet">
