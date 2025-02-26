@@ -171,6 +171,7 @@ class MainScreen(QDialog):
 
     signal_goto_theory   = pyqtSignal()
     signal_goto_test     = pyqtSignal()
+    signal_current_freq  = pyqtSignal(float)
 
     signal_poisk = pyqtSignal()
     selected_id  = 1
@@ -232,9 +233,6 @@ class MainScreen(QDialog):
         self.lbl_search_hight.setValidator(QIntValidator(1, 10000, self))
 
         self.graph()
-
-        # В перехват
-        self.graph2()
 
         style_btn = "QPushButton {color: rgb(0, 0, 0); background-color : rgb(200, 200, 200)} QPushButton::hover {background-color: rgb(255, 255, 255)}"
 
@@ -304,59 +302,6 @@ class MainScreen(QDialog):
             self.selected_line.set_ydata([])
         return self.cax, self.selected_line
 
-    def graph2(self):
-        self.selected_freq = 150 # ИНИЦИАЛИЗАЦИЯ НАДО ВЫНЕСТИ
-        scale = "MHz" # надо добавить выбор ещё и kHz
-
-        if scale == "MHz":
-            if self.selected_freq <= 250:
-                low_sp = 0
-            else:
-                low_sp = self.selected_freq - 250
-            up_sp = low_sp + 250
-            Fs = 100*up_sp
-            T = 1      # Длительность сигнала, секунда
-            t = np.linspace(0, T, int(Fs * T), endpoint=False)  # Временной вектор
-        
-            signal = np.zeros_like(t)
-            for signal_data in signals.values():
-                if signal_data.right_freq >= low_sp and signal_data.left_freq <= up_sp:
-                    signal_freqs = (filtered_freqs + signal_data.freq - 10) # частоты сигнала
-                    local_matrix = signal_data.signal_matrix
-                    for i in range(0, len(signal_freqs)):  # Перебираем столбцы
-                        if (low_sp <= signal_freqs[i] <= up_sp):
-                            amplitude = np.mean(local_matrix[:, i])  # Вычисляем среднее значение столбца
-                            if  amplitude > 0:
-                                signal += amplitude * np.sin(2 * np.pi * int(signal_freqs[i]) * t)
-
-            noise = np.random.normal(0, 2, size=t.shape)
-            signal = signal + noise
-
-            # Вычисление ДПФ
-            spectrum = np.fft.fft(signal)
-            frequencies_fft = np.fft.fftfreq(len(signal), 1 / Fs)
-            # Используем только положительные частоты
-            half_index = len(frequencies_fft) // 2
-            frequencies_fft = frequencies_fft[:half_index]
-            spectrum = spectrum[:half_index]
-
-            #Обрезаем спектр 
-            mask = (frequencies_fft >= low_sp ) & (frequencies_fft <= up_sp )
-            frequencies_fft = frequencies_fft[mask]
-            spectrum = spectrum[mask]
-
-            figure_sp, ax_sp = plt.subplots(figsize=(10, 5))
-            # График спектра сигнала
-            ax_sp.plot(frequencies_fft, 20 * np.log10(np.abs(spectrum)), label="Спектр")
-            ax_sp.set_xticks(np.linspace(low_sp, up_sp, 12))  # Больше делений по X
-            ax_sp.set_title('Амплитудный спектр (800–1200 Гц)')
-            ax_sp.set_xlabel('Частота (Гц)')
-            ax_sp.set_ylabel('Амплитуда (дБ)')
-            ax_sp.legend()
-            ax_sp.grid(True)
-
-            figure_sp.show()
-
     def graph(self):
         self.control_layer = self.Twidget
         self.control_layer = QGridLayout(self.control_layer)
@@ -414,6 +359,8 @@ class MainScreen(QDialog):
             if not found:
                 self.selected_id = None
                 # self.id_display.setText("")
+
+            self.signal_current_freq.emit(self.selected_freq)
             self.update(None)
 
     def on_scroll(self, event):

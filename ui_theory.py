@@ -37,8 +37,6 @@ class TheoryScreen(QDialog):
 
         self.btn_back.clicked.connect(self.goto_main)
 
-
-
     def graph_1(self):
         self.control_layer = self.widget
         self.control_layer = QGridLayout(self.control_layer)
