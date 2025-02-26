@@ -23,10 +23,10 @@ import ui_perehvat
 
 time = np.linspace(0, 0.2, 256) # время (y на панораме)
 filtered_freqs = np.linspace(0, 20, 512) # частоты (x на панораме)
-base = np.random.rand(len(time), len(filtered_freqs)) * 1 # фоновый шум
+base = np.random.rand(len(time), len(filtered_freqs)) * 20 # фоновый шум
 filtered_signal = [] # сигнал для отображения
 # начальный диапазон частот
-low_freq = 90.0; high_freq = low_freq + 20.0
+low_freq = 1790.0; high_freq = low_freq + 20.0
 global max_power # максимальная мощность сигнала
 max_power = 0.0
 
@@ -41,7 +41,7 @@ global search_hight # Верхняя частота для поиска
 search_hight = 30.0
 
 
-def add_signal(signal, center_freq, bandwidth, power=3.0, signal_type="voice"):
+def add_signal(signal, center_freq, bandwidth, power=3.0, signal_type="ragged"):
     time_len, freq_len = signal.shape
     full_freq_range = 20.0
     
@@ -58,7 +58,7 @@ def add_signal(signal, center_freq, bandwidth, power=3.0, signal_type="voice"):
         x = np.linspace(-1, 1, width)
         spectrum_slice = np.zeros(freq_len)
 
-        if signal_type == "voice":
+        if signal_type == "ragged":
             width_variation = width + int(np.random.uniform(-2, 2))
             boundary_shift = np.random.uniform(-0.4, 0.2)
             dropout_mask = np.ones_like(x)
@@ -68,7 +68,7 @@ def add_signal(signal, center_freq, bandwidth, power=3.0, signal_type="voice"):
             ripple = 3 + 0.7 * np.sin(10 * x + np.random.uniform(0, np.pi))
             envelope = np.exp(-10 * ((x + boundary_shift) ** 2)) * dropout_mask * ripple
 
-        elif signal_type == "tele":
+        elif signal_type == "smooth":
             envelope = np.exp(-0.05 * x**2)
             spikes = np.random.uniform(0.5, 0.5, size=len(x))
             envelope *= spikes
@@ -113,7 +113,7 @@ def add_signal(signal, center_freq, bandwidth, power=3.0, signal_type="voice"):
         signal[t] += spectrum_slice
 
 class SignalData:
-    def __init__(self, freq, bandwidth, power, signal_type, bearing, mod, text):
+    def __init__(self, freq, bandwidth, power, signal_type, bearing, mod, text, source, X, Y):
         self.freq = freq
         self.bandwidth = bandwidth
         self.power = power
@@ -121,6 +121,9 @@ class SignalData:
         self.bearing = bearing
         self.mod = mod
         self.text = text
+        self.source = source
+        self.X = X
+        self.Y = Y
 
         self.left_freq = freq - bandwidth / 2
         self.right_freq = freq + bandwidth / 2        
@@ -230,6 +233,9 @@ class MainScreen(QDialog):
 
         self.graph()
 
+        # В перехват
+        self.graph2()
+
         style_btn = "QPushButton {color: rgb(0, 0, 0); background-color : rgb(200, 200, 200)} QPushButton::hover {background-color: rgb(255, 255, 255)}"
 
         # Top
@@ -298,6 +304,59 @@ class MainScreen(QDialog):
             self.selected_line.set_ydata([])
         return self.cax, self.selected_line
 
+    def graph2(self):
+        self.selected_freq = 150 # ИНИЦИАЛИЗАЦИЯ НАДО ВЫНЕСТИ
+        scale = "MHz" # надо добавить выбор ещё и kHz
+
+        if scale == "MHz":
+            if self.selected_freq <= 250:
+                low_sp = 0
+            else:
+                low_sp = self.selected_freq - 250
+            up_sp = low_sp + 250
+            Fs = 100*up_sp
+            T = 1      # Длительность сигнала, секунда
+            t = np.linspace(0, T, int(Fs * T), endpoint=False)  # Временной вектор
+        
+            signal = np.zeros_like(t)
+            for signal_data in signals.values():
+                if signal_data.right_freq >= low_sp and signal_data.left_freq <= up_sp:
+                    signal_freqs = (filtered_freqs + signal_data.freq - 10) # частоты сигнала
+                    local_matrix = signal_data.signal_matrix
+                    for i in range(0, len(signal_freqs)):  # Перебираем столбцы
+                        if (low_sp <= signal_freqs[i] <= up_sp):
+                            amplitude = np.mean(local_matrix[:, i])  # Вычисляем среднее значение столбца
+                            if  amplitude > 0:
+                                signal += amplitude * np.sin(2 * np.pi * int(signal_freqs[i]) * t)
+
+            noise = np.random.normal(0, 2, size=t.shape)
+            signal = signal + noise
+
+            # Вычисление ДПФ
+            spectrum = np.fft.fft(signal)
+            frequencies_fft = np.fft.fftfreq(len(signal), 1 / Fs)
+            # Используем только положительные частоты
+            half_index = len(frequencies_fft) // 2
+            frequencies_fft = frequencies_fft[:half_index]
+            spectrum = spectrum[:half_index]
+
+            #Обрезаем спектр 
+            mask = (frequencies_fft >= low_sp ) & (frequencies_fft <= up_sp )
+            frequencies_fft = frequencies_fft[mask]
+            spectrum = spectrum[mask]
+
+            figure_sp, ax_sp = plt.subplots(figsize=(10, 5))
+            # График спектра сигнала
+            ax_sp.plot(frequencies_fft, 20 * np.log10(np.abs(spectrum)), label="Спектр")
+            ax_sp.set_xticks(np.linspace(low_sp, up_sp, 12))  # Больше делений по X
+            ax_sp.set_title('Амплитудный спектр (800–1200 Гц)')
+            ax_sp.set_xlabel('Частота (Гц)')
+            ax_sp.set_ylabel('Амплитуда (дБ)')
+            ax_sp.legend()
+            ax_sp.grid(True)
+
+            figure_sp.show()
+
     def graph(self):
         self.control_layer = self.Twidget
         self.control_layer = QGridLayout(self.control_layer)
@@ -309,7 +368,7 @@ class MainScreen(QDialog):
         self.canvas = FigureCanvas(self.figure)
         self.control_layer.addWidget(self.canvas)
         self.figure.patch.set_facecolor((35/256, 38/256, 50/256))
-        self.cax = self.ax.imshow(filtered_signal, aspect='auto', cmap=hdsdr_cmap, origin='upper', extent=[low_freq, high_freq, time.max(), time.min()])
+        self.cax = self.ax.imshow(filtered_signal, aspect='auto', cmap=hdsdr_cmap, vmin=0, vmax=120, origin='upper', extent=[low_freq, high_freq, time.max(), time.min()])
         self.ax.set_xlabel("Frequency [MHz]")
         self.ax.set_ylabel("Time [s]")
 
