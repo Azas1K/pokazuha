@@ -472,6 +472,44 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
      <string>Анализ</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="btn_test">
+    <property name="geometry">
+     <rect>
+      <x>700</x>
+      <y>0</y>
+      <width>140</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(210, 210, 210)</string>
+    </property>
+    <property name="text">
+     <string>Тест</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_perehvat">
+    <property name="geometry">
+     <rect>
+      <x>840</x>
+      <y>0</y>
+      <width>140</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(210, 210, 210)</string>
+    </property>
+    <property name="text">
+     <string>Перехват</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QFrame" name="frame_6">
    <property name="geometry">
@@ -925,7 +963,7 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
       <string/>
      </property>
     </widget>
-    <widget class="QPushButton" name="btn_test">
+    <widget class="QPushButton" name="btn_test_svazi">
      <property name="geometry">
       <rect>
        <x>470</x>

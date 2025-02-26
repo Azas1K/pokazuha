@@ -19,6 +19,7 @@ import math
 import ui_rabota
 import ui_administrator
 import ui_peleng
+import ui_perehvat
 
 time = np.linspace(0, 0.2, 256) # время (y на панораме)
 filtered_freqs = np.linspace(0, 20, 512) # частоты (x на панораме)
@@ -179,14 +180,18 @@ class MainScreen(QDialog):
         self.rabota_window         = ui_rabota.RabotaScreen()
         self.administrator_window  = ui_administrator.AdministratorScreen()
         self.peleng_window         = ui_peleng.PelengScreen()
+        self.perehvat_window       = ui_perehvat.PerehvatScreen()
 
         self.btn_theory.clicked.connect(self.goto_theory)
 
         self.btn_rabota.clicked.connect(self.show_rabota)
         self.btn_administrator.clicked.connect(self.show_administrator)
         self.btn_peleng.clicked.connect(self.show_peleng)
+        self.btn_perehvat.clicked.connect(self.show_perehvat)
+
         self.btn_poisk.clicked.connect(self.poisk)
         self.btn_poisk2.clicked.connect(self.poisk2)
+
 
     def goto_theory(self):
         self.signal_goto_theory.emit()
@@ -210,7 +215,10 @@ class MainScreen(QDialog):
         self.administrator_window.show()  
 
     def show_peleng(self):
-        self.peleng_window.show()  
+        self.peleng_window.show()
+
+    def show_perehvat(self):
+        self.perehvat_window.show()  
 
     def init_ui(self):
         loadUi('qt\main.ui', self)
@@ -230,6 +238,8 @@ class MainScreen(QDialog):
         self.btn_peleng.setStyleSheet(style_btn)
         self.btn_theory.setStyleSheet(style_btn)
         self.btn_analiz.setStyleSheet(style_btn)
+        self.btn_perehvat.setStyleSheet(style_btn)
+        self.btn_test.setStyleSheet(style_btn)
 
         # Подавление
         self.btn_z.setStyleSheet(style_btn)
@@ -250,7 +260,7 @@ class MainScreen(QDialog):
         self.btn_peleng_2.setStyleSheet(style_btn)
         self.btn_pauza.setStyleSheet(style_btn)
 
-        self.btn_test.setStyleSheet(style_btn)
+        self.btn_test_svazi.setStyleSheet(style_btn)
         self.btn_tehanaliz.setStyleSheet(style_btn)
 
         self.btn_send.setStyleSheet(style_btn)

@@ -125,7 +125,7 @@ class TheoryScreen(QDialog):
     def update_plot2(self, i):
         self.mod_type = self.cb_mod.currentText()
         self.fm_count = int(self.qs_hormonics.value())
-        x = np.linspace(0, 2, 10000)
+        x = np.linspace(0, 2, 20000)
 
         if self.mod_type in ("АМ", "ОМ", "ЧМ"):
             y = self.Am[0] * np.sin(2*np.pi*self.fm[0]*(x + 0.0003 * i))/80
