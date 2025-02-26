@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1703</width>
-    <height>1017</height>
+    <width>1695</width>
+    <height>994</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -644,10 +644,11 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(255,255,255)</string>
+     <string notr="true">background-color: rgb(255,255,255);
+font: 20pt &quot;MS Shell Dlg 2&quot;;</string>
     </property>
     <property name="text">
-     <string/>
+     <string>◀</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btn_empty_4">

@@ -18,14 +18,14 @@ class QT_Controler(QObject):
         self.widget = QtWidgets.QStackedWidget()
         self.main   = ui_main.MainScreen()
         self.theory = ui_theory.TheoryScreen()
-        self.perehvat = ui_perehvat.PerehvatScreen()
+        # self.perehvat = ui_perehvat.PerehvatScreen()
         
         self.signals()
         self.run()
 
     def signals(self):
         self.main.signal_goto_theory.connect(self.gotoTheoryScreen)
-        self.main.signal_current_freq.connect(self.set_freq)
+        # self.main.signal_current_freq.connect(self.set_freq)
 
         self.theory.signal_goto_main.connect(self.gotoMainScreen)
 
@@ -33,11 +33,11 @@ class QT_Controler(QObject):
         self.widget.addWidget(self.main)
         self.widget.show()
 
-    def set_freq(self, data):
-        self.freq = data
-        self.signal_current_freq.emit(self.freq)
+    # def set_freq(self, data):
+    #     self.freq = data
+    #     self.signal_current_freq.emit(self.freq)
 
-        self.perehvat.set_freq(self.freq)
+    #     self.perehvat.set_freq(self.freq)
 
     def gotoTheoryScreen(self):
         self.widget.addWidget(self.theory)

@@ -181,10 +181,14 @@ class MainScreen(QDialog):
 
         self.init_ui()
 
+        self.selected_freq = 150
+
         self.rabota_window         = ui_rabota.RabotaScreen()
         self.administrator_window  = ui_administrator.AdministratorScreen()
         self.peleng_window         = ui_peleng.PelengScreen()
         self.perehvat_window       = ui_perehvat.PerehvatScreen()
+
+        self.perehvat_window.set_data(signals, filtered_freqs, self.selected_freq)
 
         self.btn_theory.clicked.connect(self.goto_theory)
 
@@ -192,6 +196,8 @@ class MainScreen(QDialog):
         self.btn_administrator.clicked.connect(self.show_administrator)
         self.btn_peleng.clicked.connect(self.show_peleng)
         self.btn_perehvat.clicked.connect(self.show_perehvat)
+
+        self.btn_tehanaliz.clicked.connect(self.update_perehvat)
 
         self.btn_poisk.clicked.connect(self.poisk)
         self.btn_poisk2.clicked.connect(self.poisk2)
@@ -202,6 +208,9 @@ class MainScreen(QDialog):
 
     def goto_test(self):
         self.signal_goto_test.emit()
+
+    def update_perehvat(self):
+        self.perehvat_window.set_data(signals, filtered_freqs, self.selected_freq)
     
     def poisk(self):
         self.search()
@@ -222,7 +231,7 @@ class MainScreen(QDialog):
         self.peleng_window.show()
 
     def show_perehvat(self):
-        self.perehvat_window.show()  
+        self.perehvat_window.show()
 
     def init_ui(self):
         loadUi('qt\main.ui', self)
@@ -359,8 +368,6 @@ class MainScreen(QDialog):
             if not found:
                 self.selected_id = None
                 # self.id_display.setText("")
-
-            self.signal_current_freq.emit(self.selected_freq)
             self.update(None)
 
     def on_scroll(self, event):

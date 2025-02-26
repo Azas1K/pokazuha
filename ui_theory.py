@@ -37,6 +37,8 @@ class TheoryScreen(QDialog):
 
         self.btn_back.clicked.connect(self.goto_main)
 
+
+
     def graph_1(self):
         self.control_layer = self.widget
         self.control_layer = QGridLayout(self.control_layer)
@@ -114,7 +116,7 @@ class TheoryScreen(QDialog):
     def update_plot1(self, i):
         self.fc = self.qs_carrier_freq.value() / 20
         self.fm_count = int(self.qs_hormonics.value())
-        x = np.linspace(0, 2, 20000)
+        x = np.linspace(0, 2, 30000)
         
         y = self.Ac * np.sin(2*np.pi*self.fc*(x + 0.0003 * i))
         self.line1.set_data(x, y)
