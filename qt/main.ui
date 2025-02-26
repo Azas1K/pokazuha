@@ -437,25 +437,6 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
    <widget class="QPushButton" name="btn_theory">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>0</y>
-      <width>140</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="cursor">
-     <cursorShape>PointingHandCursor</cursorShape>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(210, 210, 210)</string>
-    </property>
-    <property name="text">
-     <string>Теория</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btn_analiz">
-    <property name="geometry">
-     <rect>
       <x>560</x>
       <y>0</y>
       <width>140</width>
@@ -469,7 +450,7 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
      <string notr="true">background-color: rgb(210, 210, 210)</string>
     </property>
     <property name="text">
-     <string>Анализ</string>
+     <string>Теория</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btn_test">
@@ -494,7 +475,7 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
    <widget class="QPushButton" name="btn_perehvat">
     <property name="geometry">
      <rect>
-      <x>840</x>
+      <x>420</x>
       <y>0</y>
       <width>140</width>
       <height>30</height>
@@ -606,35 +587,19 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
      </rect>
     </property>
     <property name="value">
-     <number>24</number>
+     <number>0</number>
     </property>
     <property name="textVisible">
+     <bool>false</bool>
+    </property>
+    <property name="invertedAppearance">
      <bool>false</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="btn_empty_2">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>40</y>
-      <width>71</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="cursor">
-     <cursorShape>PointingHandCursor</cursorShape>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(255,255,255)</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btn_empty_3">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
+      <x>72</x>
       <y>40</y>
       <width>71</width>
       <height>27</height>
@@ -645,16 +610,36 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
     </property>
     <property name="styleSheet">
      <string notr="true">background-color: rgb(255,255,255);
-font: 20pt &quot;MS Shell Dlg 2&quot;;</string>
+font: 50pt &quot;MS Shell Dlg 2&quot;;</string>
     </property>
     <property name="text">
-     <string>◀</string>
+     <string>▶</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_empty_3">
+    <property name="geometry">
+     <rect>
+      <x>142</x>
+      <y>40</y>
+      <width>71</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255,255,255);
+font: 35pt &quot;MS Shell Dlg 2&quot;;</string>
+    </property>
+    <property name="text">
+     <string>▐▐</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btn_empty_4">
     <property name="geometry">
      <rect>
-      <x>200</x>
+      <x>212</x>
       <y>40</y>
       <width>71</width>
       <height>27</height>
@@ -664,16 +649,17 @@ font: 20pt &quot;MS Shell Dlg 2&quot;;</string>
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(255,255,255)</string>
+     <string notr="true">background-color: rgb(255,255,255);
+font: 100pt &quot;MS Shell Dlg 2&quot;;</string>
     </property>
     <property name="text">
-     <string/>
+     <string>⯀</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btn_empty_5">
     <property name="geometry">
      <rect>
-      <x>270</x>
+      <x>282</x>
       <y>40</y>
       <width>71</width>
       <height>27</height>
@@ -686,13 +672,13 @@ font: 20pt &quot;MS Shell Dlg 2&quot;;</string>
      <string notr="true">background-color: rgb(255,255,255)</string>
     </property>
     <property name="text">
-     <string/>
+     <string>▶▶</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btn_empty_6">
     <property name="geometry">
      <rect>
-      <x>340</x>
+      <x>352</x>
       <y>40</y>
       <width>71</width>
       <height>27</height>
@@ -705,13 +691,13 @@ font: 20pt &quot;MS Shell Dlg 2&quot;;</string>
      <string notr="true">background-color: rgb(255,255,255)</string>
     </property>
     <property name="text">
-     <string/>
+     <string>◀◀</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btn_empty_7">
     <property name="geometry">
      <rect>
-      <x>410</x>
+      <x>422</x>
       <y>40</y>
       <width>71</width>
       <height>27</height>
@@ -724,13 +710,13 @@ font: 20pt &quot;MS Shell Dlg 2&quot;;</string>
      <string notr="true">background-color: rgb(255,255,255)</string>
     </property>
     <property name="text">
-     <string/>
+     <string>▷</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btn_empty_8">
     <property name="geometry">
      <rect>
-      <x>480</x>
+      <x>492</x>
       <y>40</y>
       <width>71</width>
       <height>27</height>
@@ -743,13 +729,13 @@ font: 20pt &quot;MS Shell Dlg 2&quot;;</string>
      <string notr="true">background-color: rgb(255,255,255)</string>
     </property>
     <property name="text">
-     <string/>
+     <string>◁</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btn_empty_9">
     <property name="geometry">
      <rect>
-      <x>550</x>
+      <x>562</x>
       <y>40</y>
       <width>71</width>
       <height>27</height>
@@ -762,7 +748,7 @@ font: 20pt &quot;MS Shell Dlg 2&quot;;</string>
      <string notr="true">background-color: rgb(255,255,255)</string>
     </property>
     <property name="text">
-     <string/>
+     <string>●</string>
     </property>
    </widget>
   </widget>

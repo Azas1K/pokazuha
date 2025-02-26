@@ -16,50 +16,25 @@ import numpy as np
 
 class PerehvatScreen(QDialog):
 
-    selected_freq = 150
-    prev_freq     = 150
-    sacel         = "MHz"
-    prev_scale    = "MHz"
+    selected_freq = 1700
     
     def __init__(self):
         super(PerehvatScreen, self).__init__()
         self.init_ui()
 
-    def graph(self):
-        self.control_layer = self.widget
-        self.control_layer = QGridLayout(self.control_layer)
-    
-        figure = plt.figure()
-        self.ax = plt.axes(xlim=(0, 250), ylim=(0, 150)) # ГРАНИЦЫ ГРАФИКА
-        
-        figure.patch.set_facecolor((210/256, 210/256, 210/256))
-        self.ax.set_title('Амплитудный спектр')
-        self.ax.set_xlabel('Частота (Гц)')
-        self.ax.set_ylabel('Амплитуда (дБ)')
-
-        self.line, = self.ax.plot([], [], lw=2)
-        self.anim = FuncAnimation(figure, self.update_plot, frames=20, interval=200, blit=True)
-
-        self.radial = FigureCanvas(figure)
-        self.control_layer.addWidget(self.radial,0,0)
-
+        self.cb_diapozon.activated.connect(self.update_plot)
 
     def set_data(self, sig, filtr, freq):
         self.selected_freq = round(freq)
         self.filtered_freqs = filtr
         self.signals = sig
 
-    def update_plot(self, z):
+        self.update_plot()
 
-        self.scale = self.cb_diapozon.currentText()
+    def update_plot(self):
+        scale = self.cb_diapozon.currentText()
 
-        if (self.selected_freq == self.prev_freq) and (self.prev_scale == self.scale):
-            return self.line,
-    
-        elif self.scale == "MHz":
-            self.prev_freq  = self.selected_freq
-            self.prev_scale = self.scale
-
+        if scale == "MHz":
             if self.selected_freq <= 250:
                 low_sp = 0
             else:
@@ -96,24 +71,22 @@ class PerehvatScreen(QDialog):
             frequencies_fft = frequencies_fft[mask]
             spectrum = spectrum[mask]
 
-            y = 20 * np.log10(np.abs(spectrum))
-        elif self.scale == "kHz":
-            self.prev_freq  = self.selected_freq
-            self.prev_scale = self.scale
+            figure_sp, ax_sp = plt.subplots(figsize=(10, 5))
+            # График спектра сигнала
+            ax_sp.plot(frequencies_fft, 20 * np.log10(np.abs(spectrum)))
+            ax_sp.set_xticks(np.linspace(low_sp, up_sp, 12))  # Больше делений по X
+            ax_sp.set_title('Амплитудный спектр (800–1200 Гц)')
+            ax_sp.set_xlabel('Частота (Гц)')
+            ax_sp.set_ylabel('Амплитуда (дБ)')
+            ax_sp.grid(True)
 
-            Fs = 250
-            T = 1      # Длительность сигнала, секунда
-            t = np.linspace(0, T, int(Fs * T), endpoint=False)  # Временной вектор
-            y = 20 * np.sin(200*t) +80
-
-        x = np.linspace(0, 250, 251)
-
-
-        self.line.set_data(x[0:250], y[0:250])
-        return self.line,
-
+            self.radial = FigureCanvas(figure_sp)
+            self.control_layer.addWidget(self.radial,0,0)
 
     def init_ui(self):
         loadUi('qt/perehvat.ui', self)
+
+        self.control_layer = self.widget
+        self.control_layer = QGridLayout(self.control_layer)
+
         self.setWindowFlags(Qt.WindowStaysOnTopHint)
-        self.graph()

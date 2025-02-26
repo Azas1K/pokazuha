@@ -19,7 +19,7 @@ class TheoryScreen(QDialog):
     m = 0.15 # коэффициент модуляции (от 0 до 1)
 
     Ac = 360 # амплитуда несущего сигнала
-    Am = [24, 34, 20, 15, 39] # амплитуды модулирующих сигналов
+    Am = [0.24, 0.34, 0.20, 0.15, 0.39] # амплитуды модулирующих сигналов
     fm = [40, 50, 60, 70, 80] # частоты модулирующих сигналов
 
     fs = 10*fc # частота дискретизации
@@ -37,14 +37,18 @@ class TheoryScreen(QDialog):
 
         self.btn_back.clicked.connect(self.goto_main)
 
+        self.qs_carrier_freq.sliderReleased.connect(self.graph_4)
+        self.qs_coef_mod.sliderReleased.connect(self.graph_4)
+        self.qs_hormonics.sliderReleased.connect(self.graph_4)
 
-
+        self.cb_mod.activated.connect(self.graph_4)
+        
     def graph_1(self):
         self.control_layer = self.widget
         self.control_layer = QGridLayout(self.control_layer)
     
         figure = plt.figure()
-        ax = plt.axes(xlim=(0, 0.1), ylim=(-400, 400))
+        ax = plt.axes(xlim=(0, 0.1), ylim=(-600, 600))
         
         figure.patch.set_facecolor((210/256, 210/256, 210/256))
         ax.set_title(f'Несущий сигнал')
@@ -62,7 +66,7 @@ class TheoryScreen(QDialog):
         self.control_layer = QGridLayout(self.control_layer)
     
         figure = plt.figure()
-        ax_2 = plt.axes(xlim=(0, 0.1), ylim=(-1.5, 1.5))
+        ax_2 = plt.axes(xlim=(0, 0.1), ylim=(-2, 2))
         
         figure.patch.set_facecolor((210/256, 210/256, 210/256))
         ax_2.set_title(f'Модулирующий сигнал')
@@ -94,23 +98,51 @@ class TheoryScreen(QDialog):
         self.control_layer.addWidget(self.radial_3,0,0)
 
     def graph_4(self):
-        self.control_layer = self.widget_4
-        self.control_layer = QGridLayout(self.control_layer)
-    
-        figure = plt.figure()
-        self.ax_4 = plt.axes(xlim=(0, 2500), ylim=(0, 100))
-        # self.ax_4.semilogy(self.freqs[:self.N // 2], self.spectrum[:self.N // 2])
-        
-        figure.patch.set_facecolor((210/256, 210/256, 210/256))
-        self.ax_4.set_title(f'Спектр сигнал')
-        self.ax_4.set_ylabel('Амплитуда, дБ')
-        self.ax_4.set_xlabel('Частота, МГц')
+        fc = self.qs_carrier_freq.value()
+        mod_type = self.cb_mod.currentText()
+        m = self.qs_coef_mod.value() / 100
+        fm_count = int(self.qs_hormonics.value())
 
-        self.line4, = self.ax_4.plot([], [], lw=2)
-        self.anim4 = FuncAnimation(figure, self.update_plot4, frames=200, interval=20, blit=True)
+        fs = 10*fc # частота дискретизации
+        T = 0.05  # Длительность сигнала в секундах
+        t = np.linspace(0, T, int(fs*T), endpoint=False)  # Временная ось
 
-        self.radial_4 = FigureCanvas(figure)
-        self.control_layer.addWidget(self.radial_4,0,0)
+        carrier = self.Ac * np.sin(2*np.pi*fc*t) # несущий сигнал
+
+        modulating = np.sin(2*np.pi*self.fm[0]*t) # модулирующий сигнал
+        for i in range(1,fm_count):
+            modulating += self.Am[i] * np.sin(2*np.pi*self.fm[i]*t)
+
+        if mod_type == "АМ":
+            modulated = (1 + m * modulating) * carrier  # Амплитудно-модулированный сигнал
+        elif mod_type == "ОМ":
+            modulated = (m * modulating) * carrier  # Амплитудно-модулированный сигнал
+        elif mod_type == "ЧМ":
+            modulated = self.Ac * np.sin(2*np.pi*fc*t + m*2*np.pi*modulating)  # Частотно-модулированный сигнал
+        elif mod_type == "ЧМн":
+            modulating = np.sign(np.sin(2 * np.pi * self.fm[0] * t))  # Двоичный модулирующий сигнал
+            integral_mod = np.cumsum(modulating) / fs  # Интеграл от модулирующего сигнала
+            modulated = self.Ac * np.sin(2 * np.pi * fc * t + 2000*m*np.pi* integral_mod)  # ЧМн сигнал
+        elif mod_type == "ФМн":
+            modulating = np.sign(np.sin(2 * np.pi * self.fm[0] * t))  # Двоичный модулирующий сигнал
+            modulated = self.Ac * np.cos(2 * np.pi * fc * t + (np.pi * (modulating + 1) / 2))  # ФМн сигнал 
+
+        # СПЕКТР, Дискретное преобразование Фурье
+        N = len(t)
+        freqs = fftfreq(N, 1/fs)  # Частоты спектра
+        spectrum = np.abs(fft(modulated)) / N  # Спектр
+
+        self.figure, self.ax = plt.subplots(figsize=(10, 5))
+        self.figure.patch.set_facecolor((210/256, 210/256, 210/256))
+        self.ax.semilogy(freqs[:N // 2], spectrum[:N // 2])  # Логарифмическая шкала по оси Y
+        self.canvas = FigureCanvas(self.figure)
+        self.ax.set_title(f'Спектр сигнал')
+        self.ax.set_ylabel('Амплитуда, дБ')
+        self.ax.set_xlabel('Частота, МГц')
+
+        radial = FigureCanvas(self.figure)
+
+        self.control_layer_4.addWidget(radial,0,0)
 
 
     def update_plot1(self, i):
@@ -128,9 +160,9 @@ class TheoryScreen(QDialog):
         x = np.linspace(0, 2, 20000)
 
         if self.mod_type in ("АМ", "ОМ", "ЧМ"):
-            y = self.Am[0] * np.sin(2*np.pi*self.fm[0]*(x + 0.0003 * i))/80
+            y = 1 * np.sin(2*np.pi*self.fm[0]*(x + 0.0003 * i))
             for i in range(1, self.fm_count):
-                y += self.Am[i] * np.sin(2*np.pi*self.fm[i]*(x + 0.0003 * i))/80
+                y += self.Am[i] * np.sin(2*np.pi*self.fm[i]*(x + 0.0003 * i))
 
         if self.mod_type in ("ЧМн", "ФМн"):
             y = np.sign(np.sin(2 * np.pi * self.fm[0]*(x + 0.0003 * i)))
@@ -139,74 +171,88 @@ class TheoryScreen(QDialog):
         return self.line2,
 
     def update_plot3(self, i):
-        self.fc = self.qs_carrier_freq.value() / 20
-        self.mod_type = self.cb_mod.currentText()
-        self.m = self.qs_coef_mod.value() / 1500
-        self.fm_count = int(self.qs_hormonics.value())
-        x = np.linspace(0, 2, 20000)
+        fc = self.qs_carrier_freq.value() / 20
+        mod_type = self.cb_mod.currentText()
+        m = (self.qs_coef_mod.value() / 100)
+        fm_count = int(self.qs_hormonics.value())
+        x = np.linspace(0, 2, 40000)
 
-        carrier = self.Ac * np.sin(2*np.pi*self.fc*x)
+        carrier = self.Ac * np.sin(2*np.pi*fc*x)
         
-        if self.mod_type in ("АМ", "ОМ", "ЧМ"):
-            modulating = self.Am[0] * np.sin(2*np.pi*self.fm[0]*(x + 0.0003 * i))
-            for i in range(1, self.fm_count):
+        if mod_type in ("АМ", "ОМ", "ЧМ"):
+            modulating = np.sin(2*np.pi*self.fm[0]*(x + 0.0003 * i))
+            for i in range(1, fm_count):
                 modulating += self.Am[i] * np.sin(2*np.pi*self.fm[i]*(x + 0.0003 * i))
 
-        if self.mod_type == "АМ":
-            y = (1 + self.m * modulating) * carrier / 3
-        elif self.mod_type == "ОМ":
-            y = (self.m * modulating) * carrier / 3
-        elif self.mod_type == "ЧМ":
-            y= self.Ac * np.sin(2*np.pi*self.fc*(x + 0.0003 * i) + self.m*2*np.pi*modulating)
-        elif self.mod_type == "ЧМн":
-            modulating = np.sign(np.sin(2 * np.pi * self.fm[0] * (x + (0.0003 + 0 )* i)))
+        if mod_type == "АМ":
+            y = (1 + m * modulating) * carrier
+        elif mod_type == "ОМ":
+            y = (m * modulating) * carrier
+        elif mod_type == "ЧМ":
+            y= self.Ac * np.sin(2*np.pi*fc*(x + 0.0003 * i) + m*2*np.pi*modulating)
+        elif mod_type == "ЧМн":
+            modulating = np.sign(np.sin(2 * np.pi * self.fm[0] * (x + 0.0003* i)))
             self.integral_mod = np.cumsum(modulating) / self.fs
-            y = self.Ac * np.sin(2 * np.pi * self.fc * (x + (0.0001 + 0 )* i) + 2000*self.m*np.pi* self.integral_mod)
-        elif self.mod_type == "ФМн":
+            y = self.Ac * np.sin(2 * np.pi * fc * (x + (0.0003 + 0 )* i) + 2000*m*np.pi* self.integral_mod)
+        elif mod_type == "ФМн":
             modulating = np.sign(np.sin(2 * np.pi * self.fm[0] * (x + (0.0003 + 0 )* i)))
-            y = self.Ac * np.cos(2 * np.pi * self.fc * (x + (0.0003 + 0 )* i) + (np.pi * (modulating + 1) / 2))
+            y = self.Ac * np.cos(2 * np.pi * fc * (x + (0.0003 + 0 )* i) + (np.pi * (modulating + 1) / 2))
 
         self.line3.set_data(x, y)
         return self.line3,
 
 
     def update_plot4(self, i):
-        self.fc = self.qs_carrier_freq.value() / 20
-        self.mod_type = self.cb_mod.currentText()
-        self.m = self.qs_coef_mod.value() / 1500
-        self.fm_count = int(self.qs_hormonics.value())
-        t = np.linspace(0, 2500, 2500)
 
-        Ac = 360 
-        Am = [24, 34, 20, 15, 39]
-        fm = [40, 50, 60, 70, 80]
+        Ac = 360 # амплитуда несущего сигнала
+        Am = [24, 34, 20, 15, 39] # амплитуды модулирующих сигналов
+        fm = [40, 50, 60, 70, 80] # частоты модулирующих сигналов
 
-        fs = 10*self.fc
+        fs = 10*fc # частота дискретизации
+        T = 0.05  # Длительность сигнала в секундах
+        t = np.linspace(0, T, int(fs*T), endpoint=False)  # Временная ось
 
-        carrier = Ac * np.sin(2*np.pi*self.fc*t)
+        carrier = Ac * np.sin(2*np.pi*fc*t) # несущий сигнал
 
-        modulating = Am[0] * np.sin(2*np.pi*fm[0]*t)
-        for i in range(1,self.fm_count):
+        fc = self.qs_carrier_freq.value() / 20
+        mod_type = self.cb_mod.currentText()
+        m = self.qs_coef_mod.value() / 100
+        fm_count = int(self.qs_hormonics.value())
+
+        modulating = Am[0] * np.sin(2*np.pi*fm[0]*t) # модулирующий сигнал
+        for i in range(1,fm_count):
             modulating += Am[i] * np.sin(2*np.pi*fm[i]*t)
 
-        if self.mod_type == "АМ":
-            modulated = (1 + self.m * modulating) * carrier
-        elif self.mod_type == "ОМ":
-            modulated = ( self.m * modulating) * carrier
-        elif self.mod_type == "ЧМ":
-            modulated = Ac * np.sin(2*np.pi*self.fc*t + self.m*2*np.pi*modulating)
-        elif self.mod_type == "ЧМн":
-            modulating = np.sign(np.sin(2 * np.pi * fm[0] * t))
-            integral_mod = np.cumsum(modulating) / fs
-            modulated = Ac * np.sin(2 * np.pi * self.fc * t + 2000* self.m*np.pi* integral_mod)
-        elif self.mod_type == "ФМн":
-            modulating = np.sign(np.sin(2 * np.pi * fm[0] * t))
-            modulated = Ac * np.cos(2 * np.pi * self.fc * t + (np.pi * (modulating + 1) / 2)) 
+        if mod_type == "АМ":
+            modulated = (1 + m * modulating) * carrier  # Амплитудно-модулированный сигнал
+        elif mod_type == "ОМ":
+            modulated = (m * modulating) * carrier  # Амплитудно-модулированный сигнал
+        elif mod_type == "ЧМ":
+            modulated = Ac * np.sin(2*np.pi*fc*t + m*2*np.pi*modulating)  # Частотно-модулированный сигнал
+        elif mod_type == "ЧМн":
+            modulating = np.sign(np.sin(2 * np.pi * fm[0] * t))  # Двоичный модулирующий сигнал
+            integral_mod = np.cumsum(modulating) / fs  # Интеграл от модулирующего сигнала
+            modulated = Ac * np.sin(2 * np.pi * fc * t + 2000*m*np.pi* integral_mod)  # ЧМн сигнал
+        elif mod_type == "ФМн":
+            modulating = np.sign(np.sin(2 * np.pi * fm[0] * t))  # Двоичный модулирующий сигнал
+            modulated = Ac * np.cos(2 * np.pi * fc * t + (np.pi * (modulating + 1) / 2))  # ФМн сигнал 
 
-        N = len(t) * 2
-        y = np.abs(fft(modulated)) / N
+        # СПЕКТР, Дискретное преобразование Фурье
+        N = len(t)
+        freqs = fftfreq(N, 1/fs)  # Частоты спектра
+        spectrum = np.abs(fft(modulated)) / N  # Спектр
 
-        self.line4.set_data(t, y)
+        self.figure, self.ax = plt.subplots(figsize=(10, 5))
+        self.figure.patch.set_facecolor((210/256, 210/256, 210/256))
+        self.ax.semilogy(freqs[:N // 2], spectrum[:N // 2])  # Логарифмическая шкала по оси Y
+        self.canvas = FigureCanvas(self.figure)
+        self.ax.set_title(f'Спектр сигнал')
+        self.ax.set_ylabel('Амплитуда, дБ')
+        self.ax.set_xlabel('Частота, МГц')
+
+        radial = FigureCanvas(self.figure)
+
+        self.control_layer_4.addWidget(radial,0,0)
         return self.line4,
 
     def goto_main(self):
@@ -214,6 +260,9 @@ class TheoryScreen(QDialog):
 
     def init_ui(self):
         loadUi('qt/theory.ui', self)
+
+        self.control_layer_4 = self.widget_4
+        self.control_layer_4 = QGridLayout(self.control_layer_4)
 
         self.graph_1()
         self.graph_2()

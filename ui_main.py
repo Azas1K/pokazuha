@@ -250,7 +250,6 @@ class MainScreen(QDialog):
         self.btn_administrator.setStyleSheet(style_btn)
         self.btn_peleng.setStyleSheet(style_btn)
         self.btn_theory.setStyleSheet(style_btn)
-        self.btn_analiz.setStyleSheet(style_btn)
         self.btn_perehvat.setStyleSheet(style_btn)
         self.btn_test.setStyleSheet(style_btn)
 
@@ -285,14 +284,17 @@ class MainScreen(QDialog):
         self.btn_empty_13.setStyleSheet(style_btn)
 
         # Под графиком
-        self.btn_empty_2.setStyleSheet(style_btn)
-        self.btn_empty_3.setStyleSheet(style_btn)
-        self.btn_empty_4.setStyleSheet(style_btn)
-        self.btn_empty_5.setStyleSheet(style_btn)
-        self.btn_empty_6.setStyleSheet(style_btn)
-        self.btn_empty_7.setStyleSheet(style_btn)
-        self.btn_empty_8.setStyleSheet(style_btn)
-        self.btn_empty_9.setStyleSheet(style_btn)
+        style_btn_1 = "QPushButton {color: rgb(150, 150, 150); background-color : rgb(200, 200, 200); font: 20pt \"MS Shell Dlg 2\"} QPushButton::hover {background-color: rgb(255, 255, 255)}"
+        style_btn_2 = "QPushButton {color: rgb(150, 150, 150); background-color : rgb(200, 200, 200); font: 10pt \"MS Shell Dlg 2\"} QPushButton::hover {background-color: rgb(255, 255, 255)}"
+        style_btn_3 = "QPushButton {color: rgb(150, 150, 150); background-color : rgb(200, 200, 200); font: 20t \"MS Shell Dlg 2\"} QPushButton::hover {background-color: rgb(255, 255, 255)}"
+        self.btn_empty_2.setStyleSheet(style_btn_1)
+        self.btn_empty_3.setStyleSheet(style_btn_2)
+        self.btn_empty_4.setStyleSheet(style_btn_1)
+        self.btn_empty_5.setStyleSheet(style_btn_1)
+        self.btn_empty_6.setStyleSheet(style_btn_1)
+        self.btn_empty_7.setStyleSheet(style_btn_1)
+        self.btn_empty_8.setStyleSheet(style_btn_1)
+        self.btn_empty_9.setStyleSheet(style_btn_3)
 
     def update(self, frame):
         base[:, :] = np.roll(base, shift=-2, axis=0)
