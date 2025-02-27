@@ -20,6 +20,7 @@ import ui_rabota
 import ui_administrator
 import ui_peleng
 import ui_perehvat
+import ui_test
 
 time = np.linspace(0, 0.2, 256) # время (y на панораме)
 filtered_freqs = np.linspace(0, 20, 512) # частоты (x на панораме)
@@ -187,6 +188,7 @@ class MainScreen(QDialog):
         self.administrator_window  = ui_administrator.AdministratorScreen()
         self.peleng_window         = ui_peleng.PelengScreen()
         self.perehvat_window       = ui_perehvat.PerehvatScreen()
+        self.test_window           = ui_test.TestScreen()
 
         #self.perehvat_window.set_data(signals, filtered_freqs, self.selected_freq)
 
@@ -196,6 +198,7 @@ class MainScreen(QDialog):
         self.btn_administrator.clicked.connect(self.show_administrator)
         self.btn_peleng.clicked.connect(self.show_peleng)
         self.btn_perehvat.clicked.connect(self.show_perehvat)
+        self.btn_test.clicked.connect(self.show_test)
 
         self.btn_tehanaliz.clicked.connect(self.update_perehvat)
 
@@ -226,6 +229,9 @@ class MainScreen(QDialog):
 
     def show_administrator(self):
         self.administrator_window.show()  
+
+    def show_test(self): 
+        self.test_window.show()  
 
     def show_peleng(self):
         self.peleng_window.show()

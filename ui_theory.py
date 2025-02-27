@@ -38,7 +38,13 @@ class TheoryScreen(QDialog):
         self.control_layer = QGridLayout(self.control_layer)
         figure = plt.figure()
         ax = plt.axes(xlim=(0, 0.5), ylim=(-800, 800))
-        figure.patch.set_facecolor((120/256, 120/256, 120/256))
+        ax.tick_params(axis='x', colors='white')
+        ax.tick_params(axis='y', colors='white')
+        ax.xaxis.label.set_color('white')
+        ax.yaxis.label.set_color('white')
+        ax.title.set_color('white')
+
+        figure.patch.set_facecolor((80/256, 80/256, 80/256))
         ax.set_facecolor('#232632')
         ax.set_title(f'Несущий сигнал')
         ax.set_ylabel('Амплитуда, В')
@@ -55,8 +61,14 @@ class TheoryScreen(QDialog):
     
         figure = plt.figure()
         ax_2 = plt.axes(xlim=(0, 0.5), ylim=(-2, 2))
+
+        ax_2.tick_params(axis='x', colors='white')
+        ax_2.tick_params(axis='y', colors='white')
+        ax_2.xaxis.label.set_color('white')
+        ax_2.yaxis.label.set_color('white')
+        ax_2.title.set_color('white')
         
-        figure.patch.set_facecolor((120/256, 120/256, 120/256))
+        figure.patch.set_facecolor((80/256, 80/256, 80/256))
         ax_2.set_facecolor('#232632')
         ax_2.set_title(f'Модулирующий сигнал')
         ax_2.set_ylabel('Амплитуда, В')
@@ -75,7 +87,13 @@ class TheoryScreen(QDialog):
         figure = plt.figure()
         ax_3 = plt.axes(xlim=(0, 0.5), ylim=(-800, 800))
 
-        figure.patch.set_facecolor((120/256, 120/256, 120/256))
+        ax_3.tick_params(axis='x', colors='white')
+        ax_3.tick_params(axis='y', colors='white')
+        ax_3.xaxis.label.set_color('white')
+        ax_3.yaxis.label.set_color('white')
+        ax_3.title.set_color('white')
+
+        figure.patch.set_facecolor((80/256, 80/256, 80/256))
         ax_3.set_facecolor('#232632')
         ax_3.set_title(f'Модулированный сигнал')
         ax_3.set_ylabel('Амплитуда, В')
@@ -115,8 +133,15 @@ class TheoryScreen(QDialog):
         fft_spectrum = np.fft.fft(noisy_signal)
         freqs = np.fft.fftfreq(len(fft_spectrum), 1/self.fs)
         fig, ax = plt.subplots(figsize=(10, 5))
+
+        ax.tick_params(axis='x', colors='white')
+        ax.tick_params(axis='y', colors='white')
+        ax.xaxis.label.set_color('white')
+        ax.yaxis.label.set_color('white')
+        ax.title.set_color('white')
+
         ax.set_facecolor('#232632')
-        fig.patch.set_facecolor((120/256, 120/256, 120/256))
+        fig.patch.set_facecolor((80/256, 80/256, 80/256))
         ax.semilogy(freqs[:len(freqs)//2], np.abs(fft_spectrum[:len(fft_spectrum)//2]), color='yellow')
         ax.set_xlim(fc - 200, fc + 200)
         ax.set_xlabel('Частота (Гц)')
