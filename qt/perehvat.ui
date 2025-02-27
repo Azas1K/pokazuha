@@ -73,7 +73,7 @@
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 251, 0)</string>
+     <string notr="true">background-color: rgb(212, 111, 68)</string>
     </property>
     <item>
      <property name="text">

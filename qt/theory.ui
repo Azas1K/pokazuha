@@ -137,10 +137,10 @@
      <cursorShape>SplitHCursor</cursorShape>
     </property>
     <property name="minimum">
-     <number>1000</number>
+     <number>200</number>
     </property>
     <property name="maximum">
-     <number>10000</number>
+     <number>2000</number>
     </property>
     <property name="singleStep">
      <number>1</number>
@@ -149,10 +149,10 @@
      <number>10</number>
     </property>
     <property name="value">
-     <number>1000</number>
+     <number>500</number>
     </property>
     <property name="sliderPosition">
-     <number>1000</number>
+     <number>700</number>
     </property>
     <property name="tracking">
      <bool>true</bool>
@@ -192,10 +192,10 @@
      <number>1</number>
     </property>
     <property name="value">
-     <number>1</number>
+     <number>15</number>
     </property>
     <property name="sliderPosition">
-     <number>1</number>
+     <number>15</number>
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
@@ -226,7 +226,7 @@
      <number>1</number>
     </property>
     <property name="value">
-     <number>3</number>
+     <number>1</number>
     </property>
     <property name="tracking">
      <bool>true</bool>
