@@ -20,6 +20,8 @@ class PerehvatScreen(QDialog):
         super(PerehvatScreen, self).__init__()
         self.init_ui()
         self.figure_sp, self.ax_sp = plt.subplots(figsize=(20, 5))
+        self.ax_sp.set_facecolor('#232632')  # Темно-серый фон
+        self.figure_sp.patch.set_facecolor('#232632')  # Фон всей фигуры
         self.radial = FigureCanvas(self.figure_sp)
         self.control_layer.addWidget(self.radial,0,0)
 
@@ -39,11 +41,11 @@ class PerehvatScreen(QDialog):
             if self.selected_freq <= 100:
                 low_sp = 0
             else:
-                low_sp = self.selected_freq - 100
+                low_sp = int(self.selected_freq) - 100
             up_sp = low_sp + 200
 
             Fs = 10 * up_sp
-            T = 1      # Длительность сигнала, секунда
+            T = 2  # Длительность сигнала, секунда
             t = np.linspace(0, T, int(Fs * T), endpoint=False)  # Временной вектор
         
             signal = np.zeros_like(t)
@@ -57,29 +59,22 @@ class PerehvatScreen(QDialog):
                             if  amplitude > 0:
                                 signal += amplitude * np.sin(2 * np.pi * int(signal_freqs[i]) * t)
 
-            noise = np.random.normal(0, 2, size=t.shape)
+            noise = np.random.normal(0, 1, size=t.shape)
             signal = signal + noise
 
             # Вычисление ДПФ
             spectrum = np.fft.fft(signal)
             frequencies_fft = np.fft.fftfreq(len(signal), 1 / Fs)
-            # Используем только положительные частоты
-            half_index = len(frequencies_fft) // 2
-            frequencies_fft = frequencies_fft[:half_index]
-            spectrum = spectrum[:half_index]
-
-            #Обрезаем спектр 
-            mask = (frequencies_fft >= low_sp ) & (frequencies_fft <= up_sp )
-            frequencies_fft = frequencies_fft[mask]
-            spectrum = spectrum[mask]
 
             self.ax_sp.clear()
             # График спектра сигнала
-            self.ax_sp.plot(frequencies_fft, 20 * np.log10(np.abs(spectrum)))
+            self.ax_sp.semilogy(frequencies_fft[:len(frequencies_fft)//2], np.abs(spectrum[:len(spectrum)//2]), color='yellow')
+            self.ax_sp.set_xlim(low_sp, up_sp)
             self.ax_sp.set_xticks(np.linspace(low_sp, up_sp, 17))  # Больше делений по X
-            self.ax_sp.set_title('Амплитудный спектр (800–1200 Гц)')
-            self.ax_sp.set_xlabel('Частота (Гц)')
-            self.ax_sp.set_ylabel('Амплитуда (дБ)')
+            self.ax_sp.tick_params(axis='x', colors='white')  # Цвет цифр на оси X
+            self.ax_sp.tick_params(axis='y', colors='white')  # Цвет цифр на оси Y
+            self.ax_sp.set_xlabel('Частота', color='white')
+            self.ax_sp.set_ylabel('Амплитуда (дБ)', color='white')
             self.ax_sp.grid(True)
             self.figure_sp.canvas.draw()
 

@@ -188,6 +188,8 @@ class MainScreen(QDialog):
         self.peleng_window         = ui_peleng.PelengScreen()
         self.perehvat_window       = ui_perehvat.PerehvatScreen()
 
+        #self.perehvat_window.set_data(signals, filtered_freqs, self.selected_freq)
+
         self.btn_theory.clicked.connect(self.goto_theory)
 
         self.btn_rabota.clicked.connect(self.show_rabota)

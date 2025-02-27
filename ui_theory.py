@@ -18,12 +18,12 @@ class TheoryScreen(QDialog):
     mod_type="ФМн" # тип модуляции (АМ, ОМ, ЧМ, ЧМн, ФМн)
     m = 0.15 # коэффициент модуляции (от 0 до 1)
 
-    Ac = 360 # амплитуда несущего сигнала
-    Am = [0.24, 0.34, 0.20, 0.15, 0.39] # амплитуды модулирующих сигналов
-    fm = [40, 50, 60, 70, 80] # частоты модулирующих сигналов
+    Ac = 36 # амплитуда несущего сигнала
+    Am = [10, 10, 10, 10, 10] # амплитуды модулирующих сигналов
+    fm = [100, 50, 60, 70, 80] # частоты модулирующих сигналов
 
-    fs = 10*fc # частота дискретизации
-    T = 0.05  # Длительность сигнала в секундах
+    fs = 10000 # частота дискретизации
+    T = 1  # Длительность сигнала в секундах
     time = np.linspace(0, T, int(fs*T), endpoint=False)  # Временная ось
 
     carrier = Ac * np.sin(2*np.pi*fc*time)
@@ -48,7 +48,7 @@ class TheoryScreen(QDialog):
         self.control_layer = QGridLayout(self.control_layer)
     
         figure = plt.figure()
-        ax = plt.axes(xlim=(0, 0.1), ylim=(-600, 600))
+        ax = plt.axes(xlim=(0, 1), ylim=(-600, 600))
         
         figure.patch.set_facecolor((210/256, 210/256, 210/256))
         ax.set_title(f'Несущий сигнал')
@@ -98,25 +98,25 @@ class TheoryScreen(QDialog):
         self.control_layer.addWidget(self.radial_3,0,0)
 
     def graph_4(self):
-        fc = self.qs_carrier_freq.value()
+        fc = 500
         mod_type = self.cb_mod.currentText()
         m = self.qs_coef_mod.value() / 100
         fm_count = int(self.qs_hormonics.value())
 
-        fs = 10*fc # частота дискретизации
-        T = 0.05  # Длительность сигнала в секундах
+        fs = 10000 # частота дискретизации
+        T = 1  # Длительность сигнала в секундах
         t = np.linspace(0, T, int(fs*T), endpoint=False)  # Временная ось
 
-        carrier = self.Ac * np.sin(2*np.pi*fc*t) # несущий сигнал
+        carrier = np.sin(2*np.pi*fc*t) # несущий сигнал
 
         modulating = np.sin(2*np.pi*self.fm[0]*t) # модулирующий сигнал
         for i in range(1,fm_count):
             modulating += self.Am[i] * np.sin(2*np.pi*self.fm[i]*t)
 
         if mod_type == "АМ":
-            modulated = (1 + m * modulating) * carrier  # Амплитудно-модулированный сигнал
+            modulated = self.Ac * (1 + m * modulating) * carrier  # Амплитудно-модулированный сигнал
         elif mod_type == "ОМ":
-            modulated = (m * modulating) * carrier  # Амплитудно-модулированный сигнал
+            modulated = self.Ac * (m * modulating) * carrier  # Амплитудно-модулированный сигнал
         elif mod_type == "ЧМ":
             modulated = self.Ac * np.sin(2*np.pi*fc*t + m*2*np.pi*modulating)  # Частотно-модулированный сигнал
         elif mod_type == "ЧМн":
@@ -128,13 +128,13 @@ class TheoryScreen(QDialog):
             modulated = self.Ac * np.cos(2 * np.pi * fc * t + (np.pi * (modulating + 1) / 2))  # ФМн сигнал 
 
         # СПЕКТР, Дискретное преобразование Фурье
-        N = len(t)
-        freqs = fftfreq(N, 1/fs)  # Частоты спектра
-        spectrum = np.abs(fft(modulated)) / N  # Спектр
+        spectrum = np.fft.fft(modulated)
+        freqs = np.fft.fftfreq(len(modulated), 1 / fs)
 
         self.figure, self.ax = plt.subplots(figsize=(10, 5))
         self.figure.patch.set_facecolor((210/256, 210/256, 210/256))
-        self.ax.semilogy(freqs[:N // 2], spectrum[:N // 2])  # Логарифмическая шкала по оси Y
+        self.ax.semilogy(freqs[:len(freqs) // 2], spectrum[:len(spectrum) // 2])  # Логарифмическая шкала по оси Y
+        self.ax.set_xlim(300, 700)
         self.canvas = FigureCanvas(self.figure)
         self.ax.set_title(f'Спектр сигнал')
         self.ax.set_ylabel('Амплитуда, дБ')
@@ -208,13 +208,13 @@ class TheoryScreen(QDialog):
         Am = [24, 34, 20, 15, 39] # амплитуды модулирующих сигналов
         fm = [40, 50, 60, 70, 80] # частоты модулирующих сигналов
 
-        fs = 10*fc # частота дискретизации
-        T = 0.05  # Длительность сигнала в секундах
+        fs = 10000 # частота дискретизации
+        T = 1  # Длительность сигнала в секундах
         t = np.linspace(0, T, int(fs*T), endpoint=False)  # Временная ось
 
         carrier = Ac * np.sin(2*np.pi*fc*t) # несущий сигнал
 
-        fc = self.qs_carrier_freq.value() / 20
+        #fc = self.qs_carrier_freq.value() / 20
         mod_type = self.cb_mod.currentText()
         m = self.qs_coef_mod.value() / 100
         fm_count = int(self.qs_hormonics.value())
@@ -238,13 +238,12 @@ class TheoryScreen(QDialog):
             modulated = Ac * np.cos(2 * np.pi * fc * t + (np.pi * (modulating + 1) / 2))  # ФМн сигнал 
 
         # СПЕКТР, Дискретное преобразование Фурье
-        N = len(t)
-        freqs = fftfreq(N, 1/fs)  # Частоты спектра
-        spectrum = np.abs(fft(modulated)) / N  # Спектр
+        spectrum = np.fft.fft(signal)
+        freqs = np.fft.fftfreq(len(signal), 1 / fs)
 
         self.figure, self.ax = plt.subplots(figsize=(10, 5))
         self.figure.patch.set_facecolor((210/256, 210/256, 210/256))
-        self.ax.semilogy(freqs[:N // 2], spectrum[:N // 2])  # Логарифмическая шкала по оси Y
+        self.ax.semilogy(freqs[:len(freqs) // 2], spectrum[:len(freqs) // 2])  # Логарифмическая шкала по оси Y
         self.canvas = FigureCanvas(self.figure)
         self.ax.set_title(f'Спектр сигнал')
         self.ax.set_ylabel('Амплитуда, дБ')

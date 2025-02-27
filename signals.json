@@ -1,7 +1,7 @@
 {
     "0": {
         "freq": 1800,
-        "bandwidth": 20,
+        "bandwidth": 0.200,
         "power": 70.0,
         "signal_type": "smooth",
         "mod": "None",

@@ -73,7 +73,7 @@
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(212, 111, 68)</string>
+     <string notr="true">background-color: rgb(255, 251, 0)</string>
     </property>
     <item>
      <property name="text">
@@ -83,31 +83,6 @@
     <item>
      <property name="text">
       <string>kHz</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>1</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>2</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>3</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>4</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>5</string>
      </property>
     </item>
    </widget>
