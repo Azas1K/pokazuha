@@ -86,8 +86,8 @@ def plot_xy_graph(data_enemy=signals, data_ours = our_signals):
         
         # Проверяем что точно находится в границах отображаемой карты
         # Иначе рисуем на границе карты
-        if abs(x) > (1) or abs(y) > (1):
-            factor = max(abs(x) + 0.1*scale, abs(y) + 0.1*scale)
+        if abs(x) > 1 or abs(y) > 1:
+            factor = max(abs(x) + 0.1, abs(y) + 0.1)
             x /= factor
             y /= factor
         
