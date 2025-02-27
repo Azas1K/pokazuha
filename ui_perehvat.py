@@ -140,7 +140,7 @@ class PerehvatScreen(QDialog):
             self.ax_sp.set_xticks(np.linspace(0, 2000, 20))  # Больше делений по X
             self.ax_sp.tick_params(axis='x', colors='white')  # Цвет цифр на оси X
             self.ax_sp.tick_params(axis='y', colors='white')  # Цвет цифр на оси Y
-            self.ax_sp.set_xlabel(f'Частота, + {self.selected_freq - 1000} * 10^3 кГц', color='white')
+            self.ax_sp.set_xlabel(f'Частота, + {self.selected_freq - 0.1000} * 10^3 кГц', color='white')
             self.ax_sp.set_ylabel('Амплитуда (дБ)', color='white')
             self.ax_sp.grid(True)
             self.figure_sp.canvas.draw()
