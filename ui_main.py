@@ -190,7 +190,7 @@ class MainScreen(QDialog):
         self.perehvat_window       = ui_perehvat.PerehvatScreen()
         self.test_window           = ui_test.TestScreen()
 
-        #self.perehvat_window.set_data(signals, filtered_freqs, self.selected_freq)
+        self.perehvat_window.set_data(signals, filtered_freqs, self.selected_freq)
 
         self.btn_theory.clicked.connect(self.goto_theory)
 

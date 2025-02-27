@@ -113,7 +113,7 @@ class TheoryScreen(QDialog):
         modulating = self.Am[0] * np.sin(2*np.pi*self.fm[0]*self.t) # модулирующий сигнал
         for i in range(1,fm_count):
             modulating += self.Am[i] * np.sin(2*np.pi*self.fm[i]*self.t)
-
+        plus = 0
         if mod_type == "АМ":
             signal = self.Ac * (1 + m * modulating) * (np.sin(2 * np.pi * fc * self.t))   # Амплитудно-модулированный сигнал
         elif mod_type == "ОМ":
@@ -121,10 +121,12 @@ class TheoryScreen(QDialog):
         elif mod_type == "ЧМ":
             signal = self.Ac * np.sin(2*np.pi*fc*self.t + m*2*np.pi*modulating)  # Частотно-модулированный сигнал
         elif mod_type == "ЧМн":
+            plus = 300
             modulating = np.sign(np.sin(2 * np.pi * self.fm[0] * self.t))  # Двоичный модулирующий сигнал
             integral_mod = np.cumsum(modulating) / self.fs  # Интеграл от модулирующего сигнала
             signal = self.Ac * np.sin(2 * np.pi * fc * self.t + 2000*m*np.pi* integral_mod)  # ЧМн сигнал
         elif mod_type == "ФМн":
+            plus = 150
             modulating = np.sign(np.sin(2 * np.pi * self.fm[0] * self.t))  # Двоичный модулирующий сигнал
             signal = self.Ac * np.cos(2 * np.pi * fc * self.t + (np.pi * (modulating + 1) / 2))  # ФМн сигнал
 
@@ -143,7 +145,7 @@ class TheoryScreen(QDialog):
         ax.set_facecolor('#232632')
         fig.patch.set_facecolor((80/256, 80/256, 80/256))
         ax.semilogy(freqs[:len(freqs)//2], np.abs(fft_spectrum[:len(fft_spectrum)//2]), color='yellow')
-        ax.set_xlim(fc - 200, fc + 200)
+        ax.set_xlim(fc - 200 - plus, fc + 200 + plus)
         ax.set_xlabel('Частота (Гц)')
         ax.set_ylabel('Амплитуда (логарифмическая шкала)')
         ax.set_title('Амплитудный спектр сигнала с шумом')
