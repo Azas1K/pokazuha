@@ -77,12 +77,12 @@
     </property>
     <item>
      <property name="text">
-      <string>MHz</string>
+      <string>МГц</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>kHz</string>
+      <string>кГц</string>
      </property>
     </item>
    </widget>
