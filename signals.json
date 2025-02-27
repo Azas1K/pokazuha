@@ -1,26 +1,28 @@
 {
     "0": {
-        "freq": 110,
-        "bandwidth": 0.500,
-        "power": 35.0,
+        "freq": 1800,
+        "bandwidth": 20,
+        "power": 70.0,
         "signal_type": "smooth",
-        "mod": "fmn",
-        "bearing": 101,
-        "text": "Первый! ПервыЙ! Я второй!",
-        "source": "radio",
+        "mod": "None",
+        "bearing": 105,
+        "text": ".. ^ .. ^ .. ^ ..",
+        "source": "RLC",
         "X": "10",
-        "Y": "12"
+        "Y": "12",
+        "distance": 0.5
     },
     "1": {
-        "freq": 902,
-        "bandwidth": 10,
+        "freq": 1850,
+        "bandwidth": 20.200,
         "power": 65.0,
-        "signal_type": "points",
-        "mod": "None",
-        "bearing": 325,
+        "signal_type": "ragged",
+        "mod": "am",
+        "bearing": 105,
         "text": ".. ^ .. ^ .. ^ ..",
-        "source": "dron",
+        "source": "radio",
         "X": "10",
-        "Y": "12"
+        "Y": "12",
+        "distance": 1
     }
 }

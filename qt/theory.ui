@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1888</width>
-    <height>1007</height>
+    <height>980</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -79,7 +79,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(80, 80, 80)</string>
+     <string notr="true">background-color: rgb(210, 210, 210)</string>
     </property>
    </widget>
    <widget class="QWidget" name="widget_2" native="true">
@@ -92,7 +92,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(80, 80, 80)</string>
+     <string notr="true">background-color: rgb(210, 210, 210)</string>
     </property>
    </widget>
    <widget class="QWidget" name="widget_3" native="true">
@@ -105,7 +105,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(80, 80, 80)</string>
+     <string notr="true">background-color: rgb(210, 210, 210)</string>
     </property>
    </widget>
   </widget>
@@ -137,22 +137,22 @@
      <cursorShape>SplitHCursor</cursorShape>
     </property>
     <property name="minimum">
-     <number>200</number>
+     <number>1000</number>
     </property>
     <property name="maximum">
-     <number>2000</number>
+     <number>20000</number>
     </property>
     <property name="singleStep">
      <number>1</number>
     </property>
     <property name="pageStep">
-     <number>10</number>
+     <number>400</number>
     </property>
     <property name="value">
-     <number>700</number>
+     <number>1000</number>
     </property>
     <property name="sliderPosition">
-     <number>700</number>
+     <number>1000</number>
     </property>
     <property name="tracking">
      <bool>true</bool>
@@ -192,10 +192,10 @@
      <number>1</number>
     </property>
     <property name="value">
-     <number>15</number>
+     <number>1</number>
     </property>
     <property name="sliderPosition">
-     <number>15</number>
+     <number>1</number>
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
@@ -226,7 +226,7 @@
      <number>1</number>
     </property>
     <property name="value">
-     <number>1</number>
+     <number>3</number>
     </property>
     <property name="tracking">
      <bool>true</bool>
@@ -241,7 +241,7 @@
    <widget class="QComboBox" name="cb_mod">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>50</x>
       <y>20</y>
       <width>110</width>
       <height>30</height>
@@ -339,57 +339,6 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="lbl_freq">
-    <property name="geometry">
-     <rect>
-      <x>200</x>
-      <y>20</y>
-      <width>51</width>
-      <height>19</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: rgb(255, 255, 255);
-font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
-    </property>
-    <property name="text">
-     <string>TextLabel</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lbl_m">
-    <property name="geometry">
-     <rect>
-      <x>200</x>
-      <y>80</y>
-      <width>51</width>
-      <height>19</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: rgb(255, 255, 255);
-font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
-    </property>
-    <property name="text">
-     <string>TextLabel</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lbl_harm">
-    <property name="geometry">
-     <rect>
-      <x>200</x>
-      <y>130</y>
-      <width>51</width>
-      <height>19</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: rgb(255, 255, 255);
-font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
-    </property>
-    <property name="text">
-     <string>TextLabel</string>
-    </property>
-   </widget>
   </widget>
   <widget class="QFrame" name="frame_7">
    <property name="geometry">
@@ -416,7 +365,7 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(80, 80, 80)</string>
+     <string notr="true">background-color: rgb(210, 210, 210)</string>
     </property>
    </widget>
   </widget>

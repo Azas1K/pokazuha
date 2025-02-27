@@ -268,9 +268,6 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
       <height>30</height>
      </rect>
     </property>
-    <property name="cursor">
-     <cursorShape>PointingHandCursor</cursorShape>
-    </property>
     <property name="styleSheet">
      <string notr="true">background-color: rgb(212, 111, 68)</string>
     </property>
@@ -437,7 +434,7 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
    <widget class="QPushButton" name="btn_theory">
     <property name="geometry">
      <rect>
-      <x>420</x>
+      <x>560</x>
       <y>0</y>
       <width>140</width>
       <height>30</height>
@@ -456,7 +453,7 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
    <widget class="QPushButton" name="btn_analiz">
     <property name="geometry">
      <rect>
-      <x>560</x>
+      <x>420</x>
       <y>0</y>
       <width>140</width>
       <height>30</height>
@@ -472,7 +469,7 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
      <string>Анализ</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btn_test">
+   <widget class="QPushButton" name="btn_test_2">
     <property name="geometry">
      <rect>
       <x>700</x>
@@ -491,29 +488,10 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
      <string>Тест</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btn_perehvat">
+   <widget class="QPushButton" name="btn_test_3">
     <property name="geometry">
      <rect>
       <x>840</x>
-      <y>0</y>
-      <width>140</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="cursor">
-     <cursorShape>PointingHandCursor</cursorShape>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(210, 210, 210)</string>
-    </property>
-    <property name="text">
-     <string>Перехват</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btn_map">
-    <property name="geometry">
-     <rect>
-      <x>980</x>
       <y>0</y>
       <width>140</width>
       <height>30</height>
@@ -663,11 +641,10 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(255,255,255);
-font: 20pt &quot;MS Shell Dlg 2&quot;;</string>
+     <string notr="true">background-color: rgb(255,255,255)</string>
     </property>
     <property name="text">
-     <string>◀</string>
+     <string/>
     </property>
    </widget>
    <widget class="QPushButton" name="btn_empty_4">
@@ -983,7 +960,7 @@ font: 20pt &quot;MS Shell Dlg 2&quot;;</string>
       <string/>
      </property>
     </widget>
-    <widget class="QPushButton" name="btn_test_svazi">
+    <widget class="QPushButton" name="btn_test">
      <property name="geometry">
       <rect>
        <x>470</x>
@@ -1431,9 +1408,6 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
        <width>160</width>
        <height>30</height>
       </rect>
-     </property>
-     <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
      </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(212, 111, 68)</string>
@@ -2010,9 +1984,6 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
        <width>160</width>
        <height>30</height>
       </rect>
-     </property>
-     <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
      </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(212, 111, 68)</string>

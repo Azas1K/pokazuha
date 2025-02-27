@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1429</width>
+    <width>1029</width>
     <height>699</height>
    </rect>
   </property>
@@ -21,7 +21,7 @@
     <rect>
      <x>5</x>
      <y>5</y>
-     <width>1420</width>
+     <width>1020</width>
      <height>620</height>
     </rect>
    </property>
@@ -36,12 +36,12 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>1400</width>
+      <width>1000</width>
       <height>600</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(80, 80, 80)</string>
+     <string notr="true">background-color: rgb(210, 210, 210)</string>
     </property>
    </widget>
   </widget>
@@ -50,7 +50,7 @@
     <rect>
      <x>5</x>
      <y>639</y>
-     <width>1420</width>
+     <width>1020</width>
      <height>51</height>
     </rect>
    </property>
@@ -65,7 +65,7 @@
      <rect>
       <x>420</x>
       <y>10</y>
-      <width>591</width>
+      <width>191</width>
       <height>30</height>
      </rect>
     </property>
@@ -77,12 +77,37 @@
     </property>
     <item>
      <property name="text">
-      <string>МГц</string>
+      <string>MHz</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>кГц</string>
+      <string>kHz</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>1</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>2</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>3</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>4</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>5</string>
      </property>
     </item>
    </widget>

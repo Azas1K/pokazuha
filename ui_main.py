@@ -20,7 +20,7 @@ import ui_rabota
 import ui_administrator
 import ui_peleng
 import ui_perehvat
-import ui_test
+import ui_map
 
 time = np.linspace(0, 0.2, 256) # время (y на панораме)
 filtered_freqs = np.linspace(0, 20, 512) # частоты (x на панораме)
@@ -172,6 +172,7 @@ class MainScreen(QDialog):
 
     signal_goto_theory   = pyqtSignal()
     signal_goto_test     = pyqtSignal()
+    signal_goto_map      = pyqtSignal()
     signal_current_freq  = pyqtSignal(float)
 
     signal_poisk = pyqtSignal()
@@ -188,7 +189,8 @@ class MainScreen(QDialog):
         self.administrator_window  = ui_administrator.AdministratorScreen()
         self.peleng_window         = ui_peleng.PelengScreen()
         self.perehvat_window       = ui_perehvat.PerehvatScreen()
-        self.test_window           = ui_test.TestScreen()
+        self.map_window            = ui_map.MapScreen()
+
 
         self.perehvat_window.set_data(signals, filtered_freqs, self.selected_freq)
 
@@ -198,12 +200,13 @@ class MainScreen(QDialog):
         self.btn_administrator.clicked.connect(self.show_administrator)
         self.btn_peleng.clicked.connect(self.show_peleng)
         self.btn_perehvat.clicked.connect(self.show_perehvat)
-        self.btn_test.clicked.connect(self.show_test)
 
         self.btn_tehanaliz.clicked.connect(self.update_perehvat)
 
         self.btn_poisk.clicked.connect(self.poisk)
         self.btn_poisk2.clicked.connect(self.poisk2)
+
+        self.btn_map.clicked.connect(self.goto_map)
 
 
     def goto_theory(self):
@@ -230,18 +233,17 @@ class MainScreen(QDialog):
     def show_administrator(self):
         self.administrator_window.show()  
 
-    def show_test(self): 
-        self.test_window.renew()
-        self.test_window.show()  
-
     def show_peleng(self):
         self.peleng_window.show()
+
+    def show_map(self):
+        self.map_window.show()
 
     def show_perehvat(self):
         self.perehvat_window.show()
 
     def init_ui(self):
-        loadUi('qt\main.ui', self)
+        loadUi('qt/main.ui', self)
         self.setWindowTitle("RF Spectrum Analyzer")
         self.setGeometry(100, 100, 1000, 600)
 
@@ -257,6 +259,7 @@ class MainScreen(QDialog):
         self.btn_administrator.setStyleSheet(style_btn)
         self.btn_peleng.setStyleSheet(style_btn)
         self.btn_theory.setStyleSheet(style_btn)
+        self.btn_analiz.setStyleSheet(style_btn)
         self.btn_perehvat.setStyleSheet(style_btn)
         self.btn_test.setStyleSheet(style_btn)
 
@@ -291,17 +294,14 @@ class MainScreen(QDialog):
         self.btn_empty_13.setStyleSheet(style_btn)
 
         # Под графиком
-        style_btn_1 = "QPushButton {color: rgb(150, 150, 150); background-color : rgb(200, 200, 200); font: 20pt \"MS Shell Dlg 2\"} QPushButton::hover {background-color: rgb(255, 255, 255)}"
-        style_btn_2 = "QPushButton {color: rgb(150, 150, 150); background-color : rgb(200, 200, 200); font: 10pt \"MS Shell Dlg 2\"} QPushButton::hover {background-color: rgb(255, 255, 255)}"
-        style_btn_3 = "QPushButton {color: rgb(150, 150, 150); background-color : rgb(200, 200, 200); font: 20t \"MS Shell Dlg 2\"} QPushButton::hover {background-color: rgb(255, 255, 255)}"
-        self.btn_empty_2.setStyleSheet(style_btn_1)
-        self.btn_empty_3.setStyleSheet(style_btn_2)
-        self.btn_empty_4.setStyleSheet(style_btn_1)
-        self.btn_empty_5.setStyleSheet(style_btn_1)
-        self.btn_empty_6.setStyleSheet(style_btn_1)
-        self.btn_empty_7.setStyleSheet(style_btn_1)
-        self.btn_empty_8.setStyleSheet(style_btn_1)
-        self.btn_empty_9.setStyleSheet(style_btn_3)
+        self.btn_empty_2.setStyleSheet(style_btn)
+        self.btn_empty_3.setStyleSheet(style_btn)
+        self.btn_empty_4.setStyleSheet(style_btn)
+        self.btn_empty_5.setStyleSheet(style_btn)
+        self.btn_empty_6.setStyleSheet(style_btn)
+        self.btn_empty_7.setStyleSheet(style_btn)
+        self.btn_empty_8.setStyleSheet(style_btn)
+        self.btn_empty_9.setStyleSheet(style_btn)
 
     def update(self, frame):
         base[:, :] = np.roll(base, shift=-2, axis=0)
