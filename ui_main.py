@@ -231,6 +231,7 @@ class MainScreen(QDialog):
         self.administrator_window.show()  
 
     def show_test(self): 
+        self.test_window.renew()
         self.test_window.show()  
 
     def show_peleng(self):

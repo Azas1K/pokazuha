@@ -21,7 +21,7 @@ class TestScreen(QDialog):
         self.answers = [["1", "2", "1", "2"], ["1", "2"]]
 
         self.n = len(self.tasks)
-        self.grades = [2, 3, 4, 5]
+        self.grades = [1, 3, 4] # ОЦЕНКИ. ЧТОБЫ ПОЛУЧИТЬ 3 НУЖНО НАБРАТЬ БОЛЬШЕ ОДНОГО, ЧТОБЫ ПОЛУЧИТЬ 4 - БОЛЬШЕ 3
         self.mark = 2
         self.correct = [0]*10
         
@@ -42,14 +42,22 @@ class TestScreen(QDialog):
         self.end_frame.show()
 
         i = self.correct.count(1)
-        per = i / self.n * 100
         self.mark = 2
-        if per >= self.grades[2]:
+        if i >= self.grades[2]:
             self.mark = 5
-        elif per >= self.grades[1]:
+        elif i >= self.grades[1]:
             self.mark = 4
-        elif per >= self.grades[0]:
+        elif i >= self.grades[0]:
             self.mark = 3
+
+        if self.mark == 2:
+            self.setStyleSheet('background-color: rgb(255, 71, 83)')
+        if self.mark == 3:
+            self.setStyleSheet('background-color: rgb(255, 142, 76)')
+        if self.mark == 4:
+            self.setStyleSheet('background-color: rgb(255, 230, 85)')
+        if self.mark== 5:
+            self.setStyleSheet('background-color: rgb(147, 181, 72)')
 
         self.lbl_mark.setText(str(self.mark))
         self.lbl_correct.setText(str(self.correct.count(1)) + " / " + str(len(self.correct)))
@@ -99,35 +107,18 @@ class TestScreen(QDialog):
         # CHECKS
         for i in range(5):
             self.butttons[i].hide()
+            self.butttons[i].setChecked(False)
 
         for i in range(len(self.answers[self.cur_task])):
             self.butttons[i].setText(self.answers[self.cur_task][i])
             self.butttons[i].show()
 
+    def renew(self): 
+        self.cur_task = 0
 
-    def gotoResultScreen(self):
-        i = self.correct.count(1)
-        per = i / self.n * 100
-        self.mark = 2
-        if per >= self.grades[2]:
-            self.mark = 5
-        elif per >= self.grades[1]:
-            self.mark = 4
-        elif per >= self.grades[0]:
-            self.mark = 3
-        self.signal_goto_result.emit([self.mark, i, self.n])
+        self.btn_forward.setEnabled(True)
 
-    def init_ui(self):
-        loadUi('qt/test.ui', self)
-
-        self.butttons = [self.answ_1, self.answ_2, self.answ_3, self.answ_4, self.answ_5]
-
-        self.btn_backward.setIconSize(QtCore.QSize(100,40))
-        self.btn_forward.setIconSize(QtCore.QSize(100,40))
-        style_btn = "QPushButton {color: rgb(0, 0, 0); background-color : rgb(200, 200, 200)} QPushButton::hover {background-color: rgb(255, 255, 255)}"
-        self.btn_backward.setStyleSheet(style_btn) 
-        self.btn_forward.setStyleSheet(style_btn) 
-        self.btn_end_test.setStyleSheet(style_btn) 
+        self.setStyleSheet('background-color: rgb(35,38,50)')
 
         self.lbl_task.setText("Вопрос " + str(self.cur_task + 1))
 
@@ -144,6 +135,8 @@ class TestScreen(QDialog):
 
         self.end_frame.hide()
 
+        self.main_frame.show()
+
         with open("lesson.json", encoding='utf-8') as config_file:
             data = json.load(config_file)
         self.image   = data['image']
@@ -152,7 +145,6 @@ class TestScreen(QDialog):
         self.answers = data['answers']
 
         self.correct = [0]*len(self.tasks)
-
 
         # IMAGE
         if self.image[self.cur_task] == "empty":
@@ -178,5 +170,16 @@ class TestScreen(QDialog):
             self.butttons[i].show()
 
 
+    def init_ui(self):
+        loadUi('qt/test.ui', self)
 
+        self.butttons = [self.answ_1, self.answ_2, self.answ_3, self.answ_4, self.answ_5]
 
+        self.btn_backward.setIconSize(QtCore.QSize(100,40))
+        self.btn_forward.setIconSize(QtCore.QSize(100,40))
+        style_btn = "QPushButton {color: rgb(0, 0, 0); background-color : rgb(200, 200, 200)} QPushButton::hover {background-color: rgb(255, 255, 255)}"
+        self.btn_backward.setStyleSheet(style_btn) 
+        self.btn_forward.setStyleSheet(style_btn) 
+        self.btn_end_test.setStyleSheet(style_btn) 
+
+        self.renew()

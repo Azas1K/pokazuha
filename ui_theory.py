@@ -32,6 +32,15 @@ class TheoryScreen(QDialog):
         self.qs_hormonics.sliderReleased.connect(self.graph_4)
         self.cb_mod.activated.connect(self.graph_4)
         self.qs_hormonics.valueChanged.connect(self.graph_4)
+
+        self.qs_carrier_freq.valueChanged.connect(self.update_values)
+        self.qs_coef_mod.valueChanged.connect(self.update_values)
+        self.qs_hormonics.valueChanged.connect(self.update_values)
+
+    def update_values(self):
+        self.lbl_freq.setText(str(self.qs_carrier_freq.value()))
+        self.lbl_m.setText(str((self.qs_coef_mod.value() / 100)))
+        self.lbl_harm.setText(str(self.qs_hormonics.value()))
         
     def graph_1(self):
         self.control_layer = self.widget
@@ -223,3 +232,7 @@ class TheoryScreen(QDialog):
         self.graph_4()
         style_btn = "QPushButton {color: rgb(0, 0, 0); background-color : rgb(200, 200, 200)} QPushButton::hover {background-color: rgb(255, 255, 255)}"
         self.btn_back.setStyleSheet(style_btn)
+
+        self.lbl_freq.setText(str(self.qs_carrier_freq.value()))
+        self.lbl_m.setText(str((self.qs_coef_mod.value() / 100)))
+        self.lbl_harm.setText(str(self.qs_hormonics.value()))

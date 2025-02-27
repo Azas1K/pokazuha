@@ -276,27 +276,27 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
     </property>
     <item>
      <property name="text">
-      <string>ЧМ</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
       <string>АМ</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>ППРЧ</string>
+      <string>ОМ</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>qphase</string>
+      <string>ЧМ</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>freq</string>
+      <string>ЧМн</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>ФМн</string>
      </property>
     </item>
    </widget>

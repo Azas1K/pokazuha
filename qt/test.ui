@@ -273,7 +273,7 @@ font: 20pt &quot;MS Shell Dlg 2&quot;;</string>
    <item>
     <widget class="QFrame" name="end_frame">
      <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
+      <enum>QFrame::NoFrame</enum>
      </property>
      <property name="frameShadow">
       <enum>QFrame::Plain</enum>
@@ -283,7 +283,7 @@ font: 20pt &quot;MS Shell Dlg 2&quot;;</string>
        <widget class="QLabel" name="lbl_mark">
         <property name="styleSheet">
          <string notr="true">color: rgb(255, 255, 255);
-font: 20pt &quot;MS Shell Dlg 2&quot;;</string>
+font: 80pt &quot;MS Shell Dlg 2&quot;;</string>
         </property>
         <property name="text">
          <string>Задание 1</string>
@@ -297,7 +297,10 @@ font: 20pt &quot;MS Shell Dlg 2&quot;;</string>
        <widget class="QLabel" name="lbl_correct">
         <property name="styleSheet">
          <string notr="true">color: rgb(255, 255, 255);
-font: 20pt &quot;MS Shell Dlg 2&quot;;</string>
+font: 40pt &quot;MS Shell Dlg 2&quot;;</string>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
         </property>
         <property name="text">
          <string>TextLabel</string>
