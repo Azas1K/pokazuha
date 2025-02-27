@@ -16,8 +16,8 @@ signals ={
         "bearing": 105,
         "text": ".. ^ .. ^ .. ^ ..",
         "source": "RLC",
-        "X": 12,
-        "Y": 12,
+        "X": 4,
+        "Y": 4,
 	    "distance": 0.5
     },
     "1": {
@@ -86,8 +86,8 @@ def plot_xy_graph(data_enemy=signals, data_ours = our_signals):
         
         # Проверяем что точно находится в границах отображаемой карты
         # Иначе рисуем на границе карты
-        if abs(x) > 1 or abs(y) > 1:
-            factor = max(abs(x) + 0.1, abs(y) + 0.1)
+        if abs(x) > (1) or abs(y) > (1):
+            factor = max(abs(x) + 0.1*scale, abs(y) + 0.1*scale)
             x /= factor
             y /= factor
         
@@ -139,6 +139,7 @@ def clear_signals():
 # БАРДУШКО
 # Меняем масштаб карты (если нажата кнопка масштаба)
 def change_scale(scale_changed):
+    global scale
     scale = scale_changed
     if scale == 1:
         image_path = "img/image_50000.jpg"
@@ -146,13 +147,16 @@ def change_scale(scale_changed):
         image_path = "img/image_100000.jpg"
     else:
         image_path = "img/image_250000.jpg"
-    
+ 
     plot_xy_graph()
+
+
 
 
 # БАРДУШКО
 # Изменения tickbox с отображением пеленга на карте
 def change_draw_path():
+    global draw_path
     if draw_path == True:
         draw_path = False
     else:
@@ -160,6 +164,6 @@ def change_draw_path():
     plot_xy_graph()
 
 
-change_scale(1)
-# change_scale(2)
-# change_scale(5)
+change_scale(scale_changed = 1)
+change_scale(2)
+change_scale(scale_changed = 5)
